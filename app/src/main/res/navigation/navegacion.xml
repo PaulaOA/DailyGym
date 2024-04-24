@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navegacion"
+    app:startDestination="@id/perfilFragment">
+
+    <fragment
+        android:id="@+id/perfilFragment"
+        android:name="com.example.dailygym.perfilFragment"
+        android:label="fragment_perfil"
+        tools:layout="@layout/fragment_perfil" />
+    <fragment
+        android:id="@+id/rutinasFragment"
+        android:name="com.example.dailygym.rutinasFragment"
+        android:label="fragment_rutinas"
+        tools:layout="@layout/fragment_rutinas" />
+    <fragment
+        android:id="@+id/registrosFragment"
+        android:name="com.example.dailygym.registrosFragment"
+        android:label="fragment_registros"
+        tools:layout="@layout/fragment_registros" />
+</navigation>
