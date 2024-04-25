@@ -47,21 +47,6 @@ public class CrearRutina extends AppCompatActivity {
             public void onClick(View v) {
                 String nombreRutina = editTextNombreRutina.getText().toString().trim();
                 String descripcionRutina = editTextDescripcionRutina.getText().toString().trim();
-                if (nombreRutina.isEmpty() && descripcionRutina.isEmpty()) {
-                    Toast.makeText(getApplicationContext(), "Introduce un nombre y una descripción para tu rutina", Toast.LENGTH_LONG).show();
-                    return;
-                }
-
-                if (nombreRutina.isEmpty()) {
-                    Toast.makeText(getApplicationContext(), "Introduce un nombre de rutina", Toast.LENGTH_LONG).show();
-                    return;
-                }
-
-                if (descripcionRutina.isEmpty()) {
-                    Toast.makeText(getApplicationContext(), "Introduce una descripción de rutina", Toast.LENGTH_LONG).show();
-                    return;
-                }
-
                 MyAdapter adapter = (MyAdapter) recyclerViewDias.getAdapter();
                 boolean seleccionDias = false;
                 for (int i = 0; i < adapter.getItemCount(); i++) {
@@ -70,17 +55,14 @@ public class CrearRutina extends AppCompatActivity {
                         break;
                     }
                 }
-                if (!seleccionDias) {
-                    Toast.makeText(getApplicationContext(), "Selecciona los días de tu rutina", Toast.LENGTH_LONG).show();
+                if (nombreRutina.isEmpty() || descripcionRutina.isEmpty() || !seleccionDias) {
+                    Toast.makeText(getApplicationContext(), "Completa todos los datos para crear tu rutina", Toast.LENGTH_LONG).show();
                     return;
                 }
 
                 boolean rutinaGuardada = guardarRutina();
                 if (rutinaGuardada) {
-                    String mensaje = "Rutina creada correctamente:\nNombre: " + nombreRutina + "\nDescripción: " + descripcionRutina;
-                    Toast.makeText(getApplicationContext(), mensaje, Toast.LENGTH_LONG).show();
-                } else {
-                    Toast.makeText(getApplicationContext(), "Error al crear la rutina", Toast.LENGTH_LONG).show();
+                    mostrarDialogoRutinaCreada();
                 }
             }
         });
@@ -122,6 +104,20 @@ public class CrearRutina extends AppCompatActivity {
             }
         });
         builder.setNegativeButton("Cancelar", null);
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    private void mostrarDialogoRutinaCreada() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("¡Rutina creada!");
+        builder.setMessage("Ya puedes escoger tu nueva rutina");
+        builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                finish();
+            }
+        });
         AlertDialog dialog = builder.create();
         dialog.show();
     }
