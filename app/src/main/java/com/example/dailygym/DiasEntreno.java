@@ -20,6 +20,10 @@ public class DiasEntreno {
         this.nombreDia = nombreDia;
         this.descripcionDia = descripcionDia;
     }
+    public DiasEntreno(int idDiaEntreno, String nombreDia) {
+        this.idDiaEntreno = idDiaEntreno;
+        this.nombreDia = nombreDia;
+    }
 
     public int getIdDiaEntreno() {
         return idDiaEntreno;

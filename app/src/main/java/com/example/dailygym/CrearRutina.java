@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -60,9 +61,10 @@ public class CrearRutina extends AppCompatActivity {
                     return;
                 }
 
-                boolean rutinaGuardada = guardarRutina();
-                if (rutinaGuardada) {
+                if (guardarRutina()) {
                     mostrarDialogoRutinaCreada();
+                } else {
+                    Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -86,12 +88,15 @@ public class CrearRutina extends AppCompatActivity {
 
         for (int i = 0; i < adapter.getItemCount(); i++) {
             if (adapter.isSelected(i)) {
-                DiasEntreno diaEntreno = new DiasEntreno(i, adapter.getItem(i), "Descripción del día");
+                DiasEntreno diaEntreno = new DiasEntreno(i, adapter.getItem(i));
                 diasEntreno.add(diaEntreno);
                 }
             }
         Rutinas rutina = new Rutinas(nombre, descripcion, diasEntreno);
-        return true;
+
+        BaseDatos db = new BaseDatos(this);
+        long id = db.insertRutina(rutina);
+        return id!= -1;
     }
     private void mostrarDialogoConfirmacion(){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
