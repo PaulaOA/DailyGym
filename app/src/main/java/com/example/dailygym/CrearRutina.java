@@ -39,7 +39,7 @@ public class CrearRutina extends AppCompatActivity {
         btnGuardarRutina = findViewById(R.id.btnGuardarRutina);
 
         recyclerViewDias.setLayoutManager(new GridLayoutManager(this, 2));
-        String[] diasSemana = {"Lunes","Viernes","Martes","Sábado","Miércoles","Domingo","Jueves"};
+        String[] diasSemana = {"Lunes","Martes","Miércoles","Jueves","Viernes","Sábado","Domingo"};
         MyAdapter adapter = new MyAdapter(diasSemana);
         recyclerViewDias.setAdapter(adapter);
 

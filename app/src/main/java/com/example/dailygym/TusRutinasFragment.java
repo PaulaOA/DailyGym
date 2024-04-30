@@ -57,6 +57,18 @@ public class TusRutinasFragment extends Fragment {
         rutinasAdapter = new RutinasAdapter(rutinasList, getContext());
         recyclerViewTusRutinas.setAdapter(rutinasAdapter);
 
+        rutinasAdapter.setOnDeleteClickListener(new RutinasAdapter.OnDeleteClickListener() {
+            @Override
+            public void onDeleteClick(int position) {
+                Rutinas rutina = rutinasList.get(position);
+                baseDatos.deleteRutina(rutina.getIdRutina());
+                rutinasList.remove(position);
+                rutinasAdapter.notifyItemRemoved(position);
+            }
+        });
+
+        recyclerViewTusRutinas.setAdapter(rutinasAdapter);
+
         return view;
     }
 

@@ -3,43 +3,75 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="170dp">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardViewRutinaUsuario"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_margin="8dp"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="8dp"
+        android:background="#F5F0F6"
         tools:ignore="MissingConstraints">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:background="#F6F8F4">
 
-            <TextView
-                android:id="@+id/textViewNombreRutinaUsuario"
-                android:layout_width="match_parent"
+            <LinearLayout
+                android:layout_width="350dp"
                 android:layout_height="wrap_content"
-                android:text="Nombre Rutina"
-                android:textSize="20dp"
-                android:textColor="@color/black"
-                android:fontFamily="serif"
-                android:textStyle="bold"
-                android:paddingBottom="10dp"
-                android:paddingTop="10dp"
-                android:paddingLeft="20dp"/>
+                android:orientation="vertical"
+                android:layout_gravity="center_vertical">
 
-            <TextView
-                android:id="@+id/textViewDescripcionRutinaUsuario"
-                android:layout_width="match_parent"
+                <TextView
+                    android:id="@+id/textViewNombreRutinaUsuario"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="serif"
+                    android:paddingLeft="20dp"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:text="Nombre Rutina"
+                    android:textColor="@color/black"
+                    android:textSize="22dp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/textViewDescripcionRutinaUsuario"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="serif"
+                    android:paddingLeft="30dp"
+                    android:textStyle="italic"
+                    android:paddingBottom="10dp"
+                    android:text="Descripción"
+                    android:textColor="@color/black"
+                    android:textSize="20dp" />
+
+                <TextView
+                    android:id="@+id/textViewDiasRutina"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="serif"
+                    android:paddingLeft="30dp"
+                    android:paddingTop="5dp"
+                    android:text="Dias Rutina"
+                    android:textColor="@color/black"
+                    android:textSize="16dp"
+                    android:paddingBottom="10dp"/>
+
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/btnBorrarRutina"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Descripción"
-                android:textSize="20dp"
-                android:textColor="@color/black"
-                android:fontFamily="serif"
-                android:paddingBottom="10dp"
-                android:paddingTop="10dp"
-                android:paddingLeft="25dp"/>
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/delete" />
 
         </LinearLayout>
 

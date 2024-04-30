@@ -37,7 +37,7 @@
                 android:fontFamily="serif"
                 android:paddingLeft="10dp"
                 android:paddingTop="10dp"
-                android:text="¡Hola de nuevo, usuario!"
+                android:text="¡Hola de nuevo!"
                 android:textColor="@color/black"
                 android:textSize="30dp" />
 

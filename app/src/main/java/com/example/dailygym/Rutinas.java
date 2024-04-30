@@ -37,6 +37,13 @@ public class Rutinas {
         this.descripcionRutina = descripcionRutina;
     }
 
+    public Rutinas(int idRutina, String nombreRutina, String descripcionRutina, List<DiasEntreno> diasEntreno) {
+        this.idRutina = idRutina;
+        this.nombreRutina = nombreRutina;
+        this.descripcionRutina = descripcionRutina;
+        this.diasEntreno = diasEntreno;
+    }
+
     public int getIdRutina() {
         return idRutina;
     }

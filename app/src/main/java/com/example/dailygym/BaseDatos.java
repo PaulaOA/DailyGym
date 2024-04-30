@@ -11,6 +11,7 @@ import android.util.Range;
 import androidx.annotation.Nullable;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,6 +63,12 @@ public class BaseDatos extends SQLiteOpenHelper {
         return id;
     }
 
+    public void deleteRutina(int id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_RUTINAS, COLUMN_ID + " = ?", new String[]{String.valueOf(id)});
+        db.close();
+    }
+
     public long insertRutina(Rutinas rutina) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -87,7 +94,12 @@ public class BaseDatos extends SQLiteOpenHelper {
                 int id = cursor.getInt(cursor.getColumnIndex(COLUMN_ID));
                 String nombre = cursor.getString(cursor.getColumnIndex(COLUMN_NOMBRE));
                 String descripcion = cursor.getString(cursor.getColumnIndex(COLUMN_DESCRIPCION));
-                Rutinas rutina = new Rutinas(id, nombre, descripcion, null); // Aquí debes ajustar según tu constructor
+                String diasEntrenoJson = cursor.getString(cursor.getColumnIndex(COLUMN_DIAS_ENTRENO));
+
+                Gson gson = new Gson();
+                List<DiasEntreno> diasEntreno = gson.fromJson(diasEntrenoJson, new TypeToken<List<DiasEntreno>>(){}.getType());
+
+                Rutinas rutina = new Rutinas(id, nombre, descripcion, diasEntreno);
                 rutinasList.add(rutina);
             } while (cursor.moveToNext());
         }
