@@ -58,6 +58,16 @@ public class RutinasAdapter extends RecyclerView.Adapter<RutinasAdapter.RutinasV
             diasEntrenoStr.deleteCharAt(diasEntrenoStr.length() - 2);
         }
         holder.textViewDiasRutina.setText(diasEntrenoStr.toString());
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Rutinas rutinaSeleccionada = rutinasList.get(holder.getAbsoluteAdapterPosition());
+
+                DetallesRutinaFragment detallesFragment = DetallesRutinaFragment.newInstance(rutinaSeleccionada);
+                ((MainActivity) context).replaceFragment(detallesFragment);
+            }
+        });
     }
 
     @Override
