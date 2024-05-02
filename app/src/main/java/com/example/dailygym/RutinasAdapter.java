@@ -59,13 +59,21 @@ public class RutinasAdapter extends RecyclerView.Adapter<RutinasAdapter.RutinasV
         }
         holder.textViewDiasRutina.setText(diasEntrenoStr.toString());
 
+        if (rutina.getAutorRutina().equals("Mujer")) {
+            holder.imagenRutinaCreada.setImageResource(R.drawable.gym_mujer);
+        } else {
+            holder.imagenRutinaCreada.setImageResource(R.drawable.gym_hombre);
+        }
+
+
+
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Rutinas rutinaSeleccionada = rutinasList.get(holder.getAbsoluteAdapterPosition());
 
                 DetallesRutinaFragment detallesFragment = DetallesRutinaFragment.newInstance(rutinaSeleccionada);
-                ((MainActivity) context).replaceFragment(detallesFragment);
+                ((MainActivity) context).replaceFragment(detallesFragment, true);
             }
         });
     }
@@ -82,12 +90,15 @@ public class RutinasAdapter extends RecyclerView.Adapter<RutinasAdapter.RutinasV
         TextView textViewDiasRutina;
         ImageView btnBorrarRutina;
 
+        ImageView imagenRutinaCreada;
+
         public RutinasViewHolder(@NonNull View itemView) {
             super(itemView);
             textViewNombreRutina = itemView.findViewById(R.id.textViewNombreRutinaUsuario);
             textViewDescripcionRutina = itemView.findViewById(R.id.textViewDescripcionRutinaUsuario);
             textViewDiasRutina = itemView.findViewById(R.id.textViewDiasRutina);
             btnBorrarRutina = itemView.findViewById(R.id.btnBorrarRutina);
+            imagenRutinaCreada = itemView.findViewById(R.id.imagenRutinaCreada);
 
             btnBorrarRutina.setOnClickListener(new View.OnClickListener() {
                 @Override

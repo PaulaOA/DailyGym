@@ -131,7 +131,36 @@
             android:paddingLeft="8dp">
 
         </androidx.recyclerview.widget.RecyclerView>
+        <TextView
+            android:id="@+id/textView7"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Autor Rutina"
+            android:fontFamily="serif"
+            android:textColor="@color/black"
+            android:textSize="20dp"
+            android:paddingTop="15dp"/>
 
+        <RadioGroup
+            android:id="@+id/rgAutor"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+            <RadioButton
+                android:id="@+id/rbHombre"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Hombre"
+                android:textSize="16dp"/>
+
+            <RadioButton
+                android:id="@+id/rbMujer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Mujer"
+                android:textSize="16dp"
+                android:layout_marginLeft="15dp"/>
+        </RadioGroup>
 
     </LinearLayout>
 

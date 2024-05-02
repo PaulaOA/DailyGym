@@ -1,5 +1,7 @@
 package com.example.dailygym;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -7,8 +9,10 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -18,7 +22,6 @@ public class DetallesRutinaFragment extends Fragment {
 
 
     public DetallesRutinaFragment() {
-        // Required empty public constructor
     }
     public static DetallesRutinaFragment newInstance(Rutinas rutina) {
         DetallesRutinaFragment fragment = new DetallesRutinaFragment();
@@ -42,6 +45,8 @@ public class DetallesRutinaFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_detalles_rutina, container, false);
         TextView textViewDetalleNombre = view.findViewById(R.id.textViewDetalleNombre);
         TextView textViewDetalleDescripcion = view.findViewById(R.id.textViewDetalleDescripcion);
+        Button btnSeguirRutina = view.findViewById(R.id.btnSeguirRutina);
+        LinearLayout layoutDetalles = view.findViewById(R.id.layoutDetalles);
 
         List<DiasEntreno> diasEntreno = rutina.getDiasEntreno();
 
@@ -60,7 +65,31 @@ public class DetallesRutinaFragment extends Fragment {
                 layoutDiasEntreno.addView(cardViewDia);
             }
         }
+
+        String autorRutina = rutina.getAutorRutina();
+        if (autorRutina != null && autorRutina.equals("Hombre")) {
+            layoutDetalles.setBackgroundResource(R.drawable.hombre);
+        } else if (autorRutina != null && autorRutina.equals("Mujer")){
+            layoutDetalles.setBackgroundResource(R.drawable.mujer);
+        }
+
+        //nuevo
+        btnSeguirRutina.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setRutinaPrincipal(rutina);
+                Toast.makeText(getActivity(), "Rutina principal establecida", Toast.LENGTH_SHORT).show();
+            }
+        });
+        //nuevo
         // Inflate the layout for this fragment
         return view;
+    }
+
+    private void setRutinaPrincipal(Rutinas rutina) {
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("MisPreferencias", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt("rutina_principal_id", rutina.getIdRutina());
+        editor.apply();
     }
 }

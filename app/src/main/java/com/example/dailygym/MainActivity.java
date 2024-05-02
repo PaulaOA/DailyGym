@@ -24,30 +24,33 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        replaceFragment(new rutinasFragment());
+        replaceFragment(new rutinasFragment(), false);
         binding.menuNavegacion.setSelectedItemId(R.id.btnRutinas);
 
         binding.menuNavegacion.setOnItemSelectedListener(item -> {
             int itemId = item.getItemId();
             if(itemId == R.id.btnPerfil){
-                replaceFragment(new perfilFragment());
+                replaceFragment(new perfilFragment(), false);
             } else if (itemId == R.id.btnRegistros) {
-                replaceFragment(new registrosFragment());
+                replaceFragment(new registrosFragment(), false);
             } else if (itemId == R.id.btnRutinas) {
-                replaceFragment(new rutinasFragment());
+                replaceFragment(new rutinasFragment(), false);
             }
             return true;
         });
 
     }
 
-    public void replaceFragment (Fragment fragment){
+    public void replaceFragment(Fragment fragment, boolean addToBackStack) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.contenedorMain, fragment);
-        fragmentTransaction.addToBackStack(null);
+        if (addToBackStack) {
+            fragmentTransaction.addToBackStack(null);
+        }
         fragmentTransaction.commit();
     }
+
 
     public void setToolbarText(String text) {
         TextView textView = findViewById(R.id.textTituloBar);

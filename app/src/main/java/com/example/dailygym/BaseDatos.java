@@ -18,19 +18,21 @@ import java.util.List;
 
 public class BaseDatos extends SQLiteOpenHelper {
     private static final String nombre_bbdd = "rutinas_database";
-    private static final int version_bbdd = 3;
+    private static final int version_bbdd = 4;
     private static final String TABLE_RUTINAS = "rutinas";
 
     private static final String COLUMN_ID = "id";
     private static final String COLUMN_NOMBRE = "nombre";
     private static final String COLUMN_DESCRIPCION = "descripcion";
     private static final String COLUMN_DIAS_ENTRENO = "diasEntreno";
+    private static final String COLUMN_AUTOR = "autor";
 
     private static final String CREATE_TABLE_RUTINAS = "CREATE TABLE " + TABLE_RUTINAS + "("
             + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
             + COLUMN_NOMBRE + " TEXT,"
             + COLUMN_DESCRIPCION + " TEXT,"
-            + COLUMN_DIAS_ENTRENO + " TEXT"
+            + COLUMN_DIAS_ENTRENO + " TEXT,"
+            + COLUMN_AUTOR + " TEXT"
             + ")";
 
     /*public BaseDatos(@Nullable Context context, @Nullable String name, @Nullable SQLiteDatabase.CursorFactory factory, int version) {
@@ -49,7 +51,7 @@ public class BaseDatos extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_RUTINAS);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_RUTINAS); // Eliminar la tabla existente
         onCreate(db);
     }
 
@@ -74,6 +76,7 @@ public class BaseDatos extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put(COLUMN_NOMBRE, rutina.getNombreRutina());
         values.put(COLUMN_DESCRIPCION, rutina.getDescripcionRutina());
+        values.put(COLUMN_AUTOR, rutina.getAutorRutina());
 
         Gson gson = new Gson();
         String diasEntrenoJson = gson.toJson(rutina.getDiasEntreno());
@@ -95,11 +98,12 @@ public class BaseDatos extends SQLiteOpenHelper {
                 String nombre = cursor.getString(cursor.getColumnIndex(COLUMN_NOMBRE));
                 String descripcion = cursor.getString(cursor.getColumnIndex(COLUMN_DESCRIPCION));
                 String diasEntrenoJson = cursor.getString(cursor.getColumnIndex(COLUMN_DIAS_ENTRENO));
+                String autor = cursor.getString(cursor.getColumnIndex(COLUMN_AUTOR));
 
                 Gson gson = new Gson();
                 List<DiasEntreno> diasEntreno = gson.fromJson(diasEntrenoJson, new TypeToken<List<DiasEntreno>>(){}.getType());
 
-                Rutinas rutina = new Rutinas(id, nombre, descripcion, diasEntreno);
+                Rutinas rutina = new Rutinas(id, nombre, descripcion, autor, diasEntreno);
                 rutinasList.add(rutina);
             } while (cursor.moveToNext());
         }

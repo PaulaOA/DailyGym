@@ -14,6 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -27,6 +28,7 @@ public class CrearRutina extends AppCompatActivity {
     private EditText editTextDescripcionRutina;
     private RecyclerView recyclerViewDias;
     private Button btnGuardarRutina;
+    private RadioGroup rgAutor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +37,7 @@ public class CrearRutina extends AppCompatActivity {
 
         editTextNombreRutina = findViewById(R.id.editTextNombreRutina);
         editTextDescripcionRutina = findViewById(R.id.editTextDescripcionRutina);
+        rgAutor = findViewById(R.id.rgAutor);
         recyclerViewDias = findViewById(R.id.recyclerViewDias);
         btnGuardarRutina = findViewById(R.id.btnGuardarRutina);
 
@@ -48,6 +51,15 @@ public class CrearRutina extends AppCompatActivity {
             public void onClick(View v) {
                 String nombreRutina = editTextNombreRutina.getText().toString().trim();
                 String descripcionRutina = editTextDescripcionRutina.getText().toString().trim();
+
+                int selectedId = rgAutor.getCheckedRadioButtonId();
+                String autorRutina = "";
+                if (selectedId == R.id.rbHombre){
+                    autorRutina = "Hombre";
+                } else if (selectedId == R.id.rbMujer) {
+                    autorRutina = "Mujer";
+                }
+
                 MyAdapter adapter = (MyAdapter) recyclerViewDias.getAdapter();
                 boolean seleccionDias = false;
                 for (int i = 0; i < adapter.getItemCount(); i++) {
@@ -56,12 +68,12 @@ public class CrearRutina extends AppCompatActivity {
                         break;
                     }
                 }
-                if (nombreRutina.isEmpty() || descripcionRutina.isEmpty() || !seleccionDias) {
+                if (nombreRutina.isEmpty() || descripcionRutina.isEmpty() || !seleccionDias || autorRutina.isEmpty()) {
                     Toast.makeText(getApplicationContext(), "Completa todos los datos para crear tu rutina", Toast.LENGTH_LONG).show();
                     return;
                 }
 
-                if (guardarRutina()) {
+                if (guardarRutina(nombreRutina, descripcionRutina, autorRutina)) {
                     mostrarDialogoRutinaCreada();
                 } else {
                     Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_LONG).show();
@@ -78,10 +90,7 @@ public class CrearRutina extends AppCompatActivity {
         });
     }
 
-    private boolean guardarRutina() {
-        String nombre = editTextNombreRutina.getText().toString();
-        String descripcion = editTextDescripcionRutina.getText().toString();
-
+    private boolean guardarRutina(String nombre, String descripcion, String autorRutina) {
         MyAdapter adapter = (MyAdapter) recyclerViewDias.getAdapter();
 
         List<DiasEntreno> diasEntreno = new ArrayList<>();
@@ -92,11 +101,17 @@ public class CrearRutina extends AppCompatActivity {
                 diasEntreno.add(diaEntreno);
                 }
             }
-        Rutinas rutina = new Rutinas(nombre, descripcion, diasEntreno);
+        Rutinas rutina = new Rutinas(nombre, descripcion, autorRutina, diasEntreno);
 
         BaseDatos db = new BaseDatos(this);
         long id = db.insertRutina(rutina);
-        return id!= -1;
+
+        if (id != -1) {
+            rutina.setIdRutina((int) id);  // Asignar el ID autogenerado
+            return true;
+        } else {
+            return false;
+        }
     }
     private void mostrarDialogoConfirmacion(){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);

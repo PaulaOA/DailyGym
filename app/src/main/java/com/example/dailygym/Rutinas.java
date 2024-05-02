@@ -38,15 +38,26 @@ public class Rutinas implements Serializable {
         this.descripcionRutina = descripcionRutina;
     }
 
-    public Rutinas(int idRutina, String nombreRutina, String descripcionRutina, List<DiasEntreno> diasEntreno) {
+    public Rutinas(int idRutina, String nombreRutina, String descripcionRutina, String autorRutina, List<DiasEntreno> diasEntreno) {
         this.idRutina = idRutina;
         this.nombreRutina = nombreRutina;
         this.descripcionRutina = descripcionRutina;
+        this.autorRutina = autorRutina;
+        this.diasEntreno = diasEntreno;
+    }
+
+    public Rutinas(String nombreRutina, String descripcionRutina, String autorRutina, List<DiasEntreno> diasEntreno) {
+        this.nombreRutina = nombreRutina;
+        this.descripcionRutina = descripcionRutina;
+        this.autorRutina = autorRutina;
         this.diasEntreno = diasEntreno;
     }
 
     public int getIdRutina() {
         return idRutina;
+    }
+    public void setIdRutina(int idRutina) {
+        this.idRutina = idRutina;
     }
 
     public String getNombreRutina() {
