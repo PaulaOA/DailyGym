@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,6 +37,8 @@ public class DetallesRutinaFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             rutina = (Rutinas) getArguments().getSerializable(ARG_RUTINA);
+        } else {
+            Toast.makeText(getActivity(), "Error al cargar los detalles de la rutina", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -62,6 +65,14 @@ public class DetallesRutinaFragment extends Fragment {
                 TextView textViewNombreDia = cardViewDia.findViewById(R.id.textViewNombreDia);
                 textViewNombreDia.setText(diaEntreno.getNombreDia());
 
+                cardViewDia.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Fragment fragment = DetallesDiaEntrenoFragment.newInstance(diaEntreno, rutina.getNombreRutina(), diaEntreno.getNombreDia());
+                        ((MainActivity) requireActivity()).replaceFragment(fragment, true);
+                    }
+                });
+
                 layoutDiasEntreno.addView(cardViewDia);
             }
         }
@@ -73,7 +84,6 @@ public class DetallesRutinaFragment extends Fragment {
             layoutDetalles.setBackgroundResource(R.drawable.mujer);
         }
 
-        //nuevo
         btnSeguirRutina.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -81,8 +91,6 @@ public class DetallesRutinaFragment extends Fragment {
                 Toast.makeText(getActivity(), "Rutina principal establecida", Toast.LENGTH_SHORT).show();
             }
         });
-        //nuevo
-        // Inflate the layout for this fragment
         return view;
     }
 

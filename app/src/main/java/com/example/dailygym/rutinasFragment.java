@@ -82,8 +82,6 @@ public class rutinasFragment extends Fragment {
 
         //nuevo
         actualizarRutinaPrincipalUI(rootView);
-
-
         return rootView;
         }
 
@@ -108,7 +106,6 @@ public class rutinasFragment extends Fragment {
         TextView textViewDescripcionRutinaPrincipal = view.findViewById(R.id.textViewDescripcionRutinaPrincipal);
         TextView textViewPorDefecto = view.findViewById(R.id.textViewPorDefecto);
         Button btnEntrenar = view.findViewById(R.id.btnEntrenar);
-        String autorRutina =  rutinaPrincipal.getAutorRutina();
         ImageView imagenFondo = view.findViewById(R.id.imagenFondo);
 
         if (rutinaPrincipal != null) {
@@ -119,6 +116,7 @@ public class rutinasFragment extends Fragment {
             textViewDescripcionRutinaPrincipal.setVisibility(View.VISIBLE);
             textViewPorDefecto.setVisibility(View.GONE);
             btnEntrenar.setVisibility(View.VISIBLE);
+            String autorRutina =  rutinaPrincipal.getAutorRutina();
 
             if (autorRutina != null && autorRutina.equals("Hombre")) {
                 imagenFondo.setImageResource(R.drawable.hombre);
@@ -131,7 +129,7 @@ public class rutinasFragment extends Fragment {
             textViewDescripcionRutinaPrincipal.setVisibility(View.GONE);
             textViewPorDefecto.setVisibility(View.VISIBLE);
             btnEntrenar.setVisibility(View.GONE);
-            imagenFondo.setBackgroundResource(R.color.white);
+            imagenFondo.setImageResource(R.color.white);
         }
         cardViewRutinaPrincipal.setVisibility(View.VISIBLE);
     }

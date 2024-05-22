@@ -104,7 +104,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"></LinearLayout>
 
-            <LinearLayout
+            <!--<LinearLayout
                 android:id="@+id/layoutHorizontal"
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
@@ -131,7 +131,7 @@
                     android:backgroundTint="@color/transparent"/>
 
 
-            </LinearLayout>
+            </LinearLayout> -->
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 

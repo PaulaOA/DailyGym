@@ -1,8 +1,9 @@
 package com.example.dailygym;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class DiasEntreno {
+public class DiasEntreno implements Serializable {
     private int idDiaEntreno;
     private String nombreDia;
     private String descripcionDia;
