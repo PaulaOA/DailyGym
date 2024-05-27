@@ -68,7 +68,7 @@ public class DetallesRutinaFragment extends Fragment {
                 cardViewDia.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Fragment fragment = DetallesDiaEntrenoFragment.newInstance(diaEntreno, rutina.getNombreRutina(), diaEntreno.getNombreDia());
+                        Fragment fragment = DetallesDiaEntrenoFragment.newInstance(diaEntreno, rutina.getIdRutina(), diaEntreno.getIdDiaEntreno(), rutina.getNombreRutina(), diaEntreno.getNombreDia());
                         ((MainActivity) requireActivity()).replaceFragment(fragment, true);
                     }
                 });

@@ -27,25 +27,46 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/tVNombreRutina"
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:textSize="25dp"
-            android:textColor="@color/black"
-            android:layout_marginTop="15dp"
-            android:text="Nombre Rutina" />
+            android:layout_margin="10dp">
 
-        <TextView
-            android:id="@+id/tVNombreDia"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tVNombreRutina"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:text="Nombre Rutina"
+                    android:textColor="@color/black"
+                    android:textSize="20dp" />
+
+                <TextView
+                    android:id="@+id/tVNombreDia"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:text="Nombre Dia"
+                    android:textColor="@color/black"
+                    android:textSize="40dp" />
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewEjerciciosDia"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:textSize="20dp"
-            android:textColor="@color/black"
-            android:layout_marginTop="15dp"
-            android:text="Nombre Dia" />
+            android:layout_marginTop="20dp"/>
 
         <Button
             android:id="@+id/btnAgregarEjercicios"

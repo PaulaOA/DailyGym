@@ -8,16 +8,19 @@ public class Rutinas implements Serializable {
     private String nombreRutina;
     private String descripcionRutina;
     private List<DiasEntreno> diasEntreno;
+    private List<List<Ejercicios>> ejercicios;
     private String autorRutina;
     private int imagenRutinaId;
 
-    public Rutinas(int idRutina, String nombreRutina, String descripcionRutina, List<DiasEntreno> diasEntreno, String autorRutina, int imagenRutinaId) {
+    public Rutinas(int idRutina, String nombreRutina, String descripcionRutina, List<DiasEntreno> diasEntreno, List<List<Ejercicios>> ejercicios, String autorRutina, int imagenRutinaId) {
         this.idRutina = idRutina;
         this.nombreRutina = nombreRutina;
         this.descripcionRutina = descripcionRutina;
         this.diasEntreno = diasEntreno;
         this.autorRutina = autorRutina;
         this.imagenRutinaId = imagenRutinaId;
+        this.ejercicios = ejercicios;
+
     }
 
     public Rutinas(int idRutina, String nombreRutina, String descripcionRutina, String autorRutina) {
@@ -79,4 +82,9 @@ public class Rutinas implements Serializable {
     public String getAutorRutina() {
         return autorRutina;
     }
+
+    public List<List<Ejercicios>> getEjercicios() {
+        return ejercicios;
+    }
+
 }

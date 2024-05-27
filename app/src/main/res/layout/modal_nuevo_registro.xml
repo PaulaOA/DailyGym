@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_gravity="center"
+    android:gravity="center"
+    android:layout_margin="20dp"
+    android:padding="16dp">
+
+    <EditText
+        android:id="@+id/editTextPeso"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Peso (kg)"
+        android:padding="8dp"
+        android:layout_margin="10dp"
+        android:inputType="numberDecimal"
+        android:layout_marginBottom="8dp"/>
+    <EditText
+        android:id="@+id/editTextRepeticiones"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Repeticiones"
+        android:inputType="number"
+        android:layout_margin="10dp"
+        android:padding="8dp"
+        android:layout_marginBottom="8dp"/>
+    <EditText
+        android:id="@+id/editTextSeries"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Series"
+        android:inputType="number"
+        android:layout_margin="10dp"
+        android:padding="8dp"
+        android:layout_marginBottom="8dp"/>
+
+    <Button
+        android:id="@+id/btnGuardarRegistro"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:text="Guardar"
+        android:padding="12dp"/>
+</LinearLayout>

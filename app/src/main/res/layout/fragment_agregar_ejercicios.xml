@@ -35,10 +35,31 @@
             android:layout_margin="15dp"
             android:inputType="text"
             android:paddingLeft="15dp"
-            android:hint="Buscar..." />
+            android:textSize="22dp"
+            android:hint="Nombre" />
+        <EditText
+            android:id="@+id/editTextDescripcionEjercicio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:layout_margin="15dp"
+            android:inputType="text"
+            android:paddingLeft="15dp"
+            android:textSize="22dp"
+            android:hint="Descripcion" />
+        <EditText
+            android:id="@+id/editTextMusculoPrincipal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:layout_margin="15dp"
+            android:inputType="text"
+            android:paddingLeft="15dp"
+            android:textSize="22dp"
+            android:hint="Músculo" />
 
         <Button
-            android:id="@+id/btnGuardarEjercicios"
+            android:id="@+id/btnGuardarEjercicio"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"

@@ -1,19 +1,27 @@
 package com.example.dailygym;
 
-public class Ejercicios {
-    private String idEjercicio;
+import java.io.Serializable;
+
+public class Ejercicios implements Serializable {
+    private int idEjercicio;
     private String nombreEjercicio;
     private String descripcionEjercicio;
     private String musculoPrincipal;
 
-    public Ejercicios(String idEjercicio, String nombreEjercicio, String descripcionEjercicio, String musculoPrincipal) {
+    public Ejercicios(int idEjercicio, String nombreEjercicio, String descripcionEjercicio, String musculoPrincipal) {
         this.idEjercicio = idEjercicio;
         this.nombreEjercicio = nombreEjercicio;
         this.descripcionEjercicio = descripcionEjercicio;
         this.musculoPrincipal = musculoPrincipal;
     }
 
-    public String getIdEjercicio() {
+    public Ejercicios(String nombreEjercicio, String descripcionEjercicio, String musculoPrincipal) {
+        this.nombreEjercicio = nombreEjercicio;
+        this.descripcionEjercicio = descripcionEjercicio;
+        this.musculoPrincipal = musculoPrincipal;
+    }
+
+    public int getIdEjercicio() {
         return idEjercicio;
     }
 
