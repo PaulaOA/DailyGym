@@ -59,6 +59,12 @@ public class DetallesEjercicioFragment extends Fragment implements NuevoRegistro
             idRutina = getArguments().getInt(ARG_ID_RUTINA);
             idDiaEntreno = getArguments().getInt(ARG_ID_DIA_ENTRENO);
         }
+        getParentFragmentManager().setFragmentResultListener("registroEliminado", this, new FragmentResultListener() {
+            @Override
+            public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
+                cargarRegistros(ejercicio.getIdEjercicio());
+            }
+        });
     }
 
     @Override
@@ -123,6 +129,12 @@ public class DetallesEjercicioFragment extends Fragment implements NuevoRegistro
     public void onRegistroGuardado() {
         registrosAdapter.notifyDataSetChanged();
         cargarRegistros(ejercicio.getIdEjercicio());
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        ((MainActivity) requireActivity()).setToolbarText("Rutinas");
     }
 }
 

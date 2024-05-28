@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
@@ -30,11 +31,27 @@ public class RegistrosAdapter extends RecyclerView.Adapter<RegistrosAdapter.Regi
     public void onBindViewHolder(@NonNull RegistroViewHolder holder, int position) {
         Registro registro = registros.get(position);
         holder.bind(registro);
+
+        holder.itemView.setOnClickListener(v -> {
+            ConfirmDeleteDialogFragment dialog = new ConfirmDeleteDialogFragment(new ConfirmDeleteDialogFragment.ConfirmDeleteListener() {
+                @Override
+                public void onConfirmDelete(int position) {
+                    deleteRegistro(position);
+                }
+            }, position);
+            dialog.show(((FragmentActivity) context).getSupportFragmentManager(), "ConfirmDeleteDialog");
+        });
     }
 
     @Override
     public int getItemCount() {
         return registros.size();
+    }
+
+    public void deleteRegistro(int position) {
+        new BaseDatos(context).deleteRegistro(registros.get(position).getIdRegistro());
+        registros.remove(position);
+        notifyItemRemoved(position);
     }
 
     public class RegistroViewHolder extends RecyclerView.ViewHolder {

@@ -25,6 +25,11 @@ public class EjerciciosAdapter extends RecyclerView.Adapter<EjerciciosAdapter.Ej
         this.idDiaEntreno = idDiaEntreno;
     }
 
+    public EjerciciosAdapter(Context context, List<Ejercicios> ejerciciosList) {
+        this.ejerciciosList = ejerciciosList;
+        this.context = context;
+    }
+
     @NonNull
     @Override
     public EjercicioViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -69,7 +74,7 @@ public class EjerciciosAdapter extends RecyclerView.Adapter<EjerciciosAdapter.Ej
 
                         Fragment detallesEjercicioFragment = DetallesEjercicioFragment.newInstance(ejercicio, idRutina, idDiaEntreno);
 
-                        ((MainActivity) context).replaceFragment(detallesEjercicioFragment, true);
+                        ((MainActivity) context).replaceRutinasFragment(detallesEjercicioFragment, true);
                     }
                 }
             });
@@ -81,5 +86,8 @@ public class EjerciciosAdapter extends RecyclerView.Adapter<EjerciciosAdapter.Ej
             /*textViewDescripcion.setText(ejercicio.getDescripcionEjercicio());
             textViewMusculoPrincipal.setText(ejercicio.getMusculoPrincipal());*/
         }
+    }
+    public void setEjerciciosList(List<Ejercicios> ejerciciosList) {
+        this.ejerciciosList = ejerciciosList;
     }
 }

@@ -69,7 +69,7 @@ public class DetallesRutinaFragment extends Fragment {
                     @Override
                     public void onClick(View v) {
                         Fragment fragment = DetallesDiaEntrenoFragment.newInstance(diaEntreno, rutina.getIdRutina(), diaEntreno.getIdDiaEntreno(), rutina.getNombreRutina(), diaEntreno.getNombreDia());
-                        ((MainActivity) requireActivity()).replaceFragment(fragment, true);
+                        ((MainActivity) requireActivity()).replaceRutinasFragment(fragment, true);
                     }
                 });
 
@@ -99,5 +99,11 @@ public class DetallesRutinaFragment extends Fragment {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putInt("rutina_principal_id", rutina.getIdRutina());
         editor.apply();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        ((MainActivity) requireActivity()).setToolbarText("Rutinas");
     }
 }

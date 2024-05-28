@@ -15,12 +15,6 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 import java.util.List;
-
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link TusRutinasFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class TusRutinasFragment extends Fragment {
 
     private RecyclerView recyclerViewTusRutinas;
@@ -33,7 +27,6 @@ public class TusRutinasFragment extends Fragment {
     public static TusRutinasFragment newInstance(String param1, String param2) {
         TusRutinasFragment fragment = new TusRutinasFragment();
         Bundle args = new Bundle();
-
         fragment.setArguments(args);
         return fragment;
     }
@@ -75,6 +68,6 @@ public class TusRutinasFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        ((MainActivity) requireActivity()).setToolbarText("Tus Rutinas");
+        ((MainActivity) requireActivity()).setToolbarText("Rutinas");
     }
 }

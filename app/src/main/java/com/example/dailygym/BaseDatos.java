@@ -18,7 +18,7 @@ import java.util.List;
 
 public class BaseDatos extends SQLiteOpenHelper {
     private static final String nombre_bbdd = "rutinas_database";
-    private static final int version_bbdd = 7;
+    private static final int version_bbdd = 8;
     private static final String TABLE_RUTINAS = "rutinas";
     private static final String TABLE_EJERCICIOS = "ejercicios";
     private static final String TABLE_REGISTROS = "registros";
@@ -58,7 +58,8 @@ public class BaseDatos extends SQLiteOpenHelper {
             + COLUMN_DESCRIPCION_EJERCICIO + " TEXT,"
             + COLUMN_MUSCULO_PRINCIPAL + " TEXT,"
             + COLUMN_ID_RUTINA + " INTEGER,"
-            + COLUMN_ID_DIA_ENTRENO + " INTEGER"
+            + COLUMN_ID_DIA_ENTRENO + " INTEGER,"
+            + "FOREIGN KEY(" + COLUMN_ID_RUTINA + ") REFERENCES " + TABLE_RUTINAS + "(" + COLUMN_ID + ") ON DELETE CASCADE"
             + ")";
 
     private static final String CREATE_TABLE_REGISTROS = "CREATE TABLE " + TABLE_REGISTROS + "("
@@ -69,7 +70,9 @@ public class BaseDatos extends SQLiteOpenHelper {
             + COLUMN_PESO + " REAL,"
             + COLUMN_REPETICIONES + " INTEGER,"
             + COLUMN_SERIES + " INTEGER,"
-            + COLUMN_FECHA + " DATE"
+            + COLUMN_FECHA + " DATE,"
+            + "FOREIGN KEY(" + COLUMN_ID_EJERCICIO + ") REFERENCES " + TABLE_EJERCICIOS + "(" + COLUMN_ID_EJERCICIO + ") ON DELETE CASCADE,"
+            + "FOREIGN KEY(" + COLUMN_ID_RUTINA + ") REFERENCES " + TABLE_RUTINAS + "(" + COLUMN_ID + ") ON DELETE CASCADE"
             + ")";
 
     /*public BaseDatos(@Nullable Context context, @Nullable String name, @Nullable SQLiteDatabase.CursorFactory factory, int version) {
@@ -82,9 +85,16 @@ public class BaseDatos extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+        db.execSQL("PRAGMA foreign_keys=ON;");
         db.execSQL(CREATE_TABLE_RUTINAS);
         db.execSQL(CREATE_TABLE_EJERCICIOS);
         db.execSQL(CREATE_TABLE_REGISTROS);
+    }
+
+    @Override
+    public void onOpen(SQLiteDatabase db) {
+        super.onOpen(db);
+        db.execSQL("PRAGMA foreign_keys=ON;");
     }
 
     @Override
@@ -173,13 +183,10 @@ public class BaseDatos extends SQLiteOpenHelper {
     }
 
     @SuppressLint("Range")
-    public List<Ejercicios> getAllEjercicios(int idRutina, int idDiaEntreno) {
+    public List<Ejercicios> getAllEjercicios() {
         List<Ejercicios> ejerciciosList = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
-        String[] columns = {COLUMN_ID_EJERCICIO, COLUMN_NOMBRE_EJERCICIO, COLUMN_DESCRIPCION_EJERCICIO, COLUMN_MUSCULO_PRINCIPAL};
-        String selection = COLUMN_ID_RUTINA + " = ? AND " + COLUMN_ID_DIA_ENTRENO + " = ?";
-        String[] selectionArgs = {String.valueOf(idRutina), String.valueOf(idDiaEntreno)};
-        Cursor cursor = db.query(TABLE_EJERCICIOS, columns, selection, selectionArgs, null, null, null);
+        Cursor cursor = db.query(TABLE_EJERCICIOS, null, null, null, null, null, null);
         if (cursor != null && cursor.moveToFirst()) {
             do {
                 int idEjercicio = cursor.getInt(cursor.getColumnIndex(COLUMN_ID_EJERCICIO));
@@ -267,6 +274,11 @@ public class BaseDatos extends SQLiteOpenHelper {
         }
         db.close();
         return registrosList;
+    }
+    public void deleteRegistro(int idRegistro) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_REGISTROS, COLUMN_ID_REGISTRO + " = ?", new String[]{String.valueOf(idRegistro)});
+        db.close();
     }
 
 }

@@ -1,5 +1,6 @@
 package com.example.dailygym;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -13,8 +14,13 @@ import com.example.dailygym.databinding.ActivityMainBinding;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
 
+    private Fragment currentFragment;
+    private Fragment rutinasCurrentFragment;
     ActivityMainBinding binding;
 
     @Override
@@ -24,7 +30,9 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        replaceFragment(new rutinasFragment(), false);
+        rutinasCurrentFragment = new rutinasFragment();
+        replaceFragment(rutinasCurrentFragment, false);
+
         binding.menuNavegacion.setSelectedItemId(R.id.btnRutinas);
 
         binding.menuNavegacion.setOnItemSelectedListener(item -> {
@@ -34,7 +42,9 @@ public class MainActivity extends AppCompatActivity {
             } else if (itemId == R.id.btnRegistros) {
                 replaceFragment(new registrosFragment(), false);
             } else if (itemId == R.id.btnRutinas) {
-                replaceFragment(new rutinasFragment(), false);
+                if (currentFragment != rutinasCurrentFragment) {
+                    replaceFragment(rutinasCurrentFragment, false);
+                }
             }
             return true;
         });
@@ -49,13 +59,18 @@ public class MainActivity extends AppCompatActivity {
             fragmentTransaction.addToBackStack(null);
         }
         fragmentTransaction.commit();
+        currentFragment = fragment;
     }
-
 
     public void setToolbarText(String text) {
         TextView textView = findViewById(R.id.textTituloBar);
         if (textView != null) {
             textView.setText(text);
         }
+    }
+
+    public void replaceRutinasFragment(Fragment fragment, boolean addToBackStack) {
+        rutinasCurrentFragment = fragment;
+        replaceFragment(fragment, addToBackStack);
     }
 }

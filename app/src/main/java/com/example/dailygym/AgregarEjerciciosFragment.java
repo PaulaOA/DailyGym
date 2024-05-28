@@ -16,7 +16,6 @@ public class AgregarEjerciciosFragment extends Fragment {
     private static final String ARG_ID_DIA_ENTRENO = "idDiaEntreno";
 
     public AgregarEjerciciosFragment() {
-        // Required empty public constructor
     }
 
     public static AgregarEjerciciosFragment newInstance(int idRutina, int idDiaEntreno) {
@@ -77,5 +76,11 @@ public class AgregarEjerciciosFragment extends Fragment {
     private long insertarEjercicioEnBaseDeDatos(String nombre, String descripcion, String musculoPrincipal, int idRutina, int idDiaEntreno) {
         BaseDatos baseDatos = new BaseDatos(getActivity());
         return baseDatos.insertEjercicio(nombre, descripcion, musculoPrincipal, idRutina, idDiaEntreno);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        ((MainActivity) requireActivity()).setToolbarText("Rutinas");
     }
 }

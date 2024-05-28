@@ -9,42 +9,27 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link perfilFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import java.util.ArrayList;
+import java.util.List;
+
 public class perfilFragment extends Fragment {
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private EditText editTextNombre, editTextEdad, editTextPeso, editTextAltura;
+    private Spinner spinnerSexo, spinnerObjetivo;
+    private Button btnGuardarPerfil;
 
     public perfilFragment() {
-        // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment perfilFragment.
-     */
-    // TODO: Rename and change types and number of parameters
     public static perfilFragment newInstance(String param1, String param2) {
         perfilFragment fragment = new perfilFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -53,21 +38,98 @@ public class perfilFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+
         }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_perfil, container, false);
+        View view = inflater.inflate(R.layout.fragment_perfil, container, false);
+
+        editTextNombre = view.findViewById(R.id.editTextNombrePerfil);
+        editTextEdad = view.findViewById(R.id.editTextEdadPerfil);
+        editTextPeso = view.findViewById(R.id.editTextPeso);
+        editTextAltura = view.findViewById(R.id.editTextAltura);
+        btnGuardarPerfil = view.findViewById(R.id.btnGuardarPerfil);
+
+        spinnerSexo = view.findViewById(R.id.spinnerSexoPerfil);
+        spinnerObjetivo = view.findViewById(R.id.spinnerObjetivoPerfil);
+
+        btnGuardarPerfil.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                guardarPerfil();
+            }
+        });
+
+        List<String> opcionesSexo = new ArrayList<>();
+        opcionesSexo.add("Mujer");
+        opcionesSexo.add("Hombre");
+        opcionesSexo.add("Otro");
+        ArrayAdapter<String> adapterSexo = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_dropdown_item, opcionesSexo);
+        spinnerSexo.setAdapter(adapterSexo);
+
+        List<String> opcionesObjetivo = new ArrayList<>();
+        opcionesObjetivo.add("Ganar masa muscular");
+        opcionesObjetivo.add("Pérdida de grasa");
+        opcionesObjetivo.add("Reconstrucción corporal");
+        opcionesObjetivo.add("Aumentar fuerza");
+        opcionesObjetivo.add("Mejorar resistencia");
+        ArrayAdapter<String> adapterObjetivo = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_dropdown_item, opcionesObjetivo);
+        spinnerObjetivo.setAdapter(adapterObjetivo);
+
+        return view;
     }
 
     @Override
     public void onResume() {
         super.onResume();
         ((MainActivity) requireActivity()).setToolbarText("Perfil");
+
+        PreferenceManager preferenceManager = new PreferenceManager(requireContext());
+        UserProfile userProfile = preferenceManager.getUserProfile();
+        if (userProfile != null) {
+            editTextNombre.setText(userProfile.getNombre());
+            editTextEdad.setText(String.valueOf(userProfile.getEdad()));
+            editTextPeso.setText(String.valueOf(userProfile.getPeso()));
+            editTextAltura.setText(String.valueOf(userProfile.getAltura()));
+
+            String sexo = userProfile.getSexo();
+            if (sexo != null) {
+                ArrayAdapter<CharSequence> adapterSexo = (ArrayAdapter<CharSequence>) spinnerSexo.getAdapter();
+                int positionSexo = adapterSexo.getPosition(sexo);
+                spinnerSexo.setSelection(positionSexo);
+            }
+
+            String objetivo = userProfile.getObjetivos();
+            if (objetivo != null) {
+                ArrayAdapter<CharSequence> adapterObjetivo = (ArrayAdapter<CharSequence>) spinnerObjetivo.getAdapter();
+                int positionObjetivo = adapterObjetivo.getPosition(objetivo);
+                spinnerObjetivo.setSelection(positionObjetivo);
+            }
+        }
+    }
+
+    private void guardarPerfil() {
+        String nombre = editTextNombre.getText().toString();
+        int edad = Integer.parseInt(editTextEdad.getText().toString());
+        double peso = Double.parseDouble(editTextPeso.getText().toString());
+        double altura = Double.parseDouble(editTextAltura.getText().toString());
+        String sexo = spinnerSexo.getSelectedItem().toString();
+        String objetivo = spinnerObjetivo.getSelectedItem().toString();
+
+        UserProfile userProfile = new UserProfile();
+        userProfile.setNombre(nombre);
+        userProfile.setEdad(edad);
+        userProfile.setPeso(peso);
+        userProfile.setAltura(altura);
+        userProfile.setSexo(sexo);
+        userProfile.setObjetivos(objetivo);
+
+        PreferenceManager preferenceManager = new PreferenceManager(requireContext());
+        preferenceManager.saveUserProfile(userProfile);
+
+        Toast.makeText(requireContext(), "Datos de Perfil guardados correctamente", Toast.LENGTH_SHORT).show();
     }
 }

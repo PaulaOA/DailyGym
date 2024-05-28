@@ -1,8 +1,10 @@
 package com.example.dailygym;
 
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -11,9 +13,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class DetallesDiaEntrenoFragment extends Fragment {
@@ -82,11 +87,19 @@ public class DetallesDiaEntrenoFragment extends Fragment {
         recyclerViewEjerciciosDia.setAdapter(ejerciciosAdapter);
 
         Button btnAgregarEjercicios = view.findViewById(R.id.btnAgregarEjercicios);
+        Button btnEliminarEjercicios = view.findViewById(R.id.btnEliminarEjercicios);
         btnAgregarEjercicios.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Fragment agregarEjerciciosFragment = AgregarEjerciciosFragment.newInstance(idRutina, idDiaEntreno);
-                ((MainActivity) requireActivity()).replaceFragment(agregarEjerciciosFragment, true);
+                ((MainActivity) requireActivity()).replaceRutinasFragment(agregarEjerciciosFragment, true);
+            }
+        });
+
+        btnEliminarEjercicios.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mostrarDialogoEliminarEjercicios(idRutina, idDiaEntreno);
             }
         });
 
@@ -95,5 +108,61 @@ public class DetallesDiaEntrenoFragment extends Fragment {
     private List<Ejercicios> getEjerciciosPorDia(int idRutina, int idDiaEntreno) {
         BaseDatos baseDatos = new BaseDatos(getContext());
         return baseDatos.getEjerciciosPorDia(idRutina, idDiaEntreno);
+    }
+
+    private void mostrarDialogoEliminarEjercicios(int idRutina, int idDiaEntreno) {
+        LayoutInflater inflater = LayoutInflater.from(getContext());
+        View dialogView = inflater.inflate(R.layout.dialog_eliminar_ejercicios, null);
+
+        LinearLayout checkboxContainer = dialogView.findViewById(R.id.checkboxContainer);
+
+        List<Ejercicios> ejerciciosList = getEjerciciosPorDia(idRutina, idDiaEntreno);
+
+        for (Ejercicios ejercicio : ejerciciosList) {
+            CheckBox checkBox = new CheckBox(getContext());
+            checkBox.setText(ejercicio.getNombreEjercicio());
+            checkBox.setTextSize(18);
+            checkBox.setTag(ejercicio.getIdEjercicio());
+            checkboxContainer.addView(checkBox);
+        }
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setView(dialogView)
+                .setTitle("Eliminar ejercicios")
+                .setNegativeButton("Cancelar", null)
+                .setPositiveButton("Eliminar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        List<Integer> ejerciciosAEliminar = new ArrayList<>();
+                        for (int i = 0; i <checkboxContainer.getChildCount(); i++) {
+                            CheckBox checkBox = (CheckBox) checkboxContainer.getChildAt(i);
+                            if (checkBox.isChecked()) {
+                                ejerciciosAEliminar.add((Integer) checkBox.getTag());
+                            }
+                        }
+                        eliminarEjercicios(ejerciciosAEliminar);
+                    }
+                })
+                .create()
+                .show();
+    }
+
+    private void eliminarEjercicios(List<Integer> ejerciciosAEliminar) {
+        BaseDatos baseDatos = new BaseDatos(getContext());
+        for(int idEjercicio : ejerciciosAEliminar) {
+            baseDatos.deleteEjercicio(idEjercicio);
+        }
+        Toast.makeText(getContext(), "Ejercicios eliminados correctamente", Toast.LENGTH_SHORT).show();
+        ejerciciosAdapter.setEjerciciosList(getEjerciciosPorDia(
+              getArguments().getInt(ARG_ID_RUTINA),
+              getArguments().getInt(ARG_ID_DIA_ENTRENO)
+        ));
+        ejerciciosAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        ((MainActivity) requireActivity()).setToolbarText("Rutinas");
     }
 }

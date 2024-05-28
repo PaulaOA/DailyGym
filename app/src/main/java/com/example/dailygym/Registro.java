@@ -15,6 +15,13 @@ public class Registro {
         this.fecha = fecha;
     }
 
+    public Registro(double peso, int repeticiones, int series, String fecha) {
+        this.peso = peso;
+        this.repeticiones = repeticiones;
+        this.series = series;
+        this.fecha = fecha;
+    }
+
     public int getIdRegistro() {
         return idRegistro;
     }

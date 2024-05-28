@@ -27,8 +27,6 @@ import java.util.List;
  * create an instance of this fragment.
  */
 public class rutinasFragment extends Fragment {
-    private View btnCrearRutina;
-
     public rutinasFragment() {
     }
 
@@ -76,11 +74,10 @@ public class rutinasFragment extends Fragment {
         textViewTusRutinas.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((MainActivity) requireActivity()).replaceFragment(new TusRutinasFragment(), true);
+                ((MainActivity) requireActivity()).replaceRutinasFragment(new TusRutinasFragment(), true);
             }
         });
 
-        //nuevo
         actualizarRutinaPrincipalUI(rootView);
         return rootView;
         }
@@ -91,7 +88,6 @@ public class rutinasFragment extends Fragment {
         super.onResume();
         ((MainActivity) requireActivity()).setToolbarText("Rutinas");
 
-        //nuevo
         View view = getView();
         if (view != null) {
             actualizarRutinaPrincipalUI(view);

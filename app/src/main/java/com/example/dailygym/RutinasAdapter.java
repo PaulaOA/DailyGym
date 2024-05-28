@@ -73,7 +73,7 @@ public class RutinasAdapter extends RecyclerView.Adapter<RutinasAdapter.RutinasV
                 Rutinas rutinaSeleccionada = rutinasList.get(holder.getAbsoluteAdapterPosition());
 
                 DetallesRutinaFragment detallesFragment = DetallesRutinaFragment.newInstance(rutinaSeleccionada);
-                ((MainActivity) context).replaceFragment(detallesFragment, true);
+                ((MainActivity) context).replaceRutinasFragment(detallesFragment, true);
             }
         });
     }

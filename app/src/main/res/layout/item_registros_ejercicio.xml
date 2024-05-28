@@ -1,0 +1,47 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardViewRegistros"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="5dp"
+        android:layout_margin="10dp"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="4dp"
+        >
+
+        <TextView
+            android:id="@+id/textViewNombreEjercicioRegistro"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:drawableRight="@drawable/flecha_abajo"
+            android:drawablePadding="8dp"
+            android:paddingRight="150dp"
+            android:padding="10dp"
+            android:text="Nombre del ejercicio"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+    </androidx.cardview.widget.CardView>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewRegistrosPorEjercicio"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:nestedScrollingEnabled="false"
+        android:visibility="gone">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+    <TextView
+        android:id="@+id/sinRegistrostextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="15dp"
+        android:text="Aún no hay registros"
+        android:visibility="gone"/>
+
+</LinearLayout>

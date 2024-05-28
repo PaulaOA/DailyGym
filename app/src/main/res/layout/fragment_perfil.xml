@@ -28,7 +28,125 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/textViewNombrePerfil"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="20dp"
+                android:textColor="@color/black"
+                android:layout_marginTop="25dp"
+                android:layout_marginLeft="20dp"
+                android:text="Nombre" />
+
+            <EditText
+                android:id="@+id/editTextNombrePerfil"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:layout_marginLeft="25dp"
+                android:layout_marginRight="50dp"
+                android:inputType="text" />
+            <TextView
+                android:id="@+id/textViewEdadPerfil"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="20dp"
+                android:textColor="@color/black"
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="20dp"
+                android:text="Edad" />
+
+            <EditText
+                android:id="@+id/editTextEdadPerfil"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:layout_marginLeft="25dp"
+                android:layout_marginRight="50dp"
+                android:inputType="number" />
+            <TextView
+                android:id="@+id/textViewPesoPerfil"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="20dp"
+                android:textColor="@color/black"
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="20dp"
+                android:text="Peso (kg)" />
+
+            <EditText
+                android:id="@+id/editTextPeso"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:layout_marginLeft="25dp"
+                android:layout_marginRight="50dp"
+                android:inputType="numberDecimal" />
+            <TextView
+                android:id="@+id/textViewAlturaPerfil"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="20dp"
+                android:textColor="@color/black"
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="20dp"
+                android:text="Altura (cm)" />
+
+            <EditText
+                android:id="@+id/editTextAltura"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:layout_marginLeft="25dp"
+                android:layout_marginRight="50dp"
+                android:inputType="numberDecimal" />
+            <TextView
+                android:id="@+id/textViewSexoPerfil"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="20dp"
+                android:textColor="@color/black"
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="20dp"
+                android:text="Sexo" />
+
+            <Spinner
+                android:id="@+id/spinnerSexoPerfil"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="20dp"/>
+
+            <TextView
+                android:id="@+id/textViewObjetivoPerfil"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="20dp"
+                android:textColor="@color/black"
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="20dp"
+                android:text="Objetivo" />
+
+            <Spinner
+                android:id="@+id/spinnerObjetivoPerfil"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="20dp"/>
+
+            <Button
+                android:id="@+id/btnGuardarPerfil"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:layout_marginBottom="16dp"
+                android:padding="12dp"
+                android:text="Guardar" />
+
         </LinearLayout>
     </ScrollView>
 

@@ -1,0 +1,34 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="8dp">
+
+    <TextView
+        android:id="@+id/textViewPesoRegistro"
+        android:layout_width="wrap_content"
+        android:padding="10dp"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        android:text="Peso" />
+
+    <TextView
+        android:id="@+id/textViewRepeticionesRegistro"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        android:text="Reps" />
+
+    <TextView
+        android:id="@+id/textViewSeriesRegistro"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        android:text="Series" />
+
+</LinearLayout>

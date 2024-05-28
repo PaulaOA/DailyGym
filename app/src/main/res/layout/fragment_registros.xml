@@ -29,6 +29,24 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView8"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="20dp"
+                android:textSize="20sp"
+                android:textColor="@color/black"
+                android:fontFamily="serif"
+                android:textStyle="bold"
+                android:text="Ejercicios" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerViewRegistroEjercicios"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="15dp"/>
         </LinearLayout>
     </ScrollView>
 

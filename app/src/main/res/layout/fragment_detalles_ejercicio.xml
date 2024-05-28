@@ -50,7 +50,7 @@
                 android:layout_gravity="center"
                 android:text="Descripción"
                 android:textColor="@color/black"
-                android:textSize="20dp" />
+                android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/textViewMusculoPrincipalDetalle"
@@ -68,6 +68,9 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="15dp"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:padding="15dp"
                 android:text="Nuevo Registro" />
 
             <TextView
