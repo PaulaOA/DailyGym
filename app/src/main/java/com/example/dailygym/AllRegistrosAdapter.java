@@ -1,5 +1,6 @@
 package com.example.dailygym;
 
+import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 public class AllRegistrosAdapter extends RecyclerView.Adapter<AllRegistrosAdapter.AllRegistrosViewHolder> {
-    private List<Registro> registroList;
+    private final List<Registro> registroList;
 
     public AllRegistrosAdapter(List<Registro> registroList){
         this.registroList = registroList;
@@ -24,6 +25,7 @@ public class AllRegistrosAdapter extends RecyclerView.Adapter<AllRegistrosAdapte
         return new AllRegistrosViewHolder(view);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull AllRegistrosViewHolder holder, int position) {
         Registro registro = registroList.get(position);

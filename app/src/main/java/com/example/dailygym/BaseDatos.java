@@ -6,8 +6,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Range;
-
 import androidx.annotation.Nullable;
 
 import com.google.gson.Gson;
@@ -75,10 +73,6 @@ public class BaseDatos extends SQLiteOpenHelper {
             + "FOREIGN KEY(" + COLUMN_ID_RUTINA + ") REFERENCES " + TABLE_RUTINAS + "(" + COLUMN_ID + ") ON DELETE CASCADE"
             + ")";
 
-    /*public BaseDatos(@Nullable Context context, @Nullable String name, @Nullable SQLiteDatabase.CursorFactory factory, int version) {
-        super(context, nombre_bbdd, null, version_bbdd);
-    }*/
-
     public BaseDatos(@Nullable Context context) {
         super(context, nombre_bbdd, null, version_bbdd);
     }
@@ -103,16 +97,6 @@ public class BaseDatos extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_EJERCICIOS);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_REGISTROS);
         onCreate(db);
-    }
-
-    public long insert(String nombre, String descripcion) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put(COLUMN_NOMBRE, nombre);
-        values.put(COLUMN_DESCRIPCION, descripcion);
-        long id = db.insert(TABLE_RUTINAS, null, values);
-        db.close();
-        return id;
     }
 
     public void deleteRutina(int id) {

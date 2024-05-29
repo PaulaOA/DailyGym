@@ -14,8 +14,8 @@ public class ConfirmDeleteDialogFragment extends DialogFragment {
         void onConfirmDelete(int position);
     }
 
-    private ConfirmDeleteListener listener;
-    private int position;
+    private final ConfirmDeleteListener listener;
+    private final int position;
 
     public ConfirmDeleteDialogFragment(ConfirmDeleteListener listener, int position) {
         this.listener = listener;

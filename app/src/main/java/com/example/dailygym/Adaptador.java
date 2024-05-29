@@ -11,37 +11,54 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-public class Adaptador extends ArrayAdapter {
+public class Adaptador extends ArrayAdapter<Rutinas> {
 
-    Rutinas[] rutinas;
+    static class ViewHolder {
+        TextView nombreRutina;
+        TextView descripcionRutina;
+        ImageView imagenRutina;
+    }
+
     public Adaptador(@NonNull Context context, Rutinas[] datosRutina) {
         super(context, R.layout.vista_rutina, datosRutina);
-        this.rutinas = datosRutina;
 
     }
 
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+        ViewHolder viewHolder;
 
-        LayoutInflater inflador = LayoutInflater.from(getContext());
-        View elemento = inflador.inflate(R.layout.vista_rutina, parent, false);
+        if (convertView == null) {
+            LayoutInflater inflater = LayoutInflater.from(getContext());
+            convertView = inflater.inflate(R.layout.vista_rutina, parent, false);
 
-        TextView nombreRutina = (TextView) elemento.findViewById(R.id.nombreRutina);
-        nombreRutina.setText(rutinas[position].getNombreRutina());
+            viewHolder = new ViewHolder();
+            viewHolder.nombreRutina = convertView.findViewById(R.id.nombreRutina);
+            viewHolder.descripcionRutina = convertView.findViewById(R.id.descripcionRutina);
+            viewHolder.imagenRutina = convertView.findViewById(R.id.imagenRutina);
 
-        TextView descripcionRutina = (TextView) elemento.findViewById(R.id.descripcionRutina);
-        descripcionRutina.setText(rutinas[position].getDescripcionRutina());
-
-        ImageView imagenRutina = (ImageView) elemento.findViewById(R.id.imagenRutina);
-
-        switch (rutinas[position].getAutorRutina()){
-            case "Mujer": imagenRutina.setImageResource(R.drawable.gym_mujer);
-            break;
-            case "Hombre": imagenRutina.setImageResource(R.drawable.gym_hombre);
-            break;
+            convertView.setTag(viewHolder);
+        } else {
+            viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        return elemento;
+        Rutinas rutina = getItem(position);
+
+        if(rutina != null) {
+            viewHolder.nombreRutina.setText(rutina.getNombreRutina());
+            viewHolder.descripcionRutina.setText(rutina.getDescripcionRutina());
+
+            switch (rutina.getAutorRutina()) {
+                case "Mujer":
+                    viewHolder.imagenRutina.setImageResource(R.drawable.gym_mujer);
+                    break;
+                case "Hombre":
+                    viewHolder.imagenRutina.setImageResource(R.drawable.gym_hombre);
+                    break;
+            }
+        }
+
+        return convertView;
     }
 }

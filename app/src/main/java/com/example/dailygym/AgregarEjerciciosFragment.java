@@ -30,10 +30,6 @@ public class AgregarEjerciciosFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            int idRutina = getArguments().getInt(ARG_ID_RUTINA);
-            int idDiaEntreno = getArguments().getInt(ARG_ID_DIA_ENTRENO);
-        }
     }
 
     @Override
@@ -46,36 +42,38 @@ public class AgregarEjerciciosFragment extends Fragment {
         EditText editTextMusculoPrincipal = view.findViewById(R.id.editTextMusculoPrincipal);
         Button btnGuardarEjercicio = view.findViewById(R.id.btnGuardarEjercicio);
 
-        int idRutina = getArguments().getInt(ARG_ID_RUTINA);
-        int idDiaEntreno = getArguments().getInt(ARG_ID_DIA_ENTRENO);
+        if (getArguments() != null) {
+            int idRutina = getArguments().getInt(ARG_ID_RUTINA);
+            int idDiaEntreno = getArguments().getInt(ARG_ID_DIA_ENTRENO);
 
-        btnGuardarEjercicio.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+            btnGuardarEjercicio.setOnClickListener((View v) -> {
                 String nombreEjercicio = editTextNombreEjercicio.getText().toString();
                 String descripcionEjercicio = editTextDescripcionEjercicio.getText().toString();
                 String musculoPrincipal = editTextMusculoPrincipal.getText().toString();
 
                 if (!nombreEjercicio.isEmpty() && !descripcionEjercicio.isEmpty() && !musculoPrincipal.isEmpty()) {
                     long idEjercicio = insertarEjercicioEnBaseDeDatos (nombreEjercicio, descripcionEjercicio, musculoPrincipal, idRutina, idDiaEntreno);
-                        if (idEjercicio != -1) {
-                            Toast.makeText(getActivity(), "Ejercicio guardado correctamente", Toast.LENGTH_SHORT).show();
-                        } else {
-                            Toast.makeText(getActivity(), "Error al guardar el ejercicio", Toast.LENGTH_SHORT).show();
-                        }
+                    if (idEjercicio != -1) {
+                        Toast.makeText(getActivity(), "Ejercicio guardado correctamente", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getActivity(), "Error al guardar el ejercicio", Toast.LENGTH_SHORT).show();
+                    }
 
                 } else {
                     Toast.makeText(getActivity(), "Por favor complete todos los campos", Toast.LENGTH_SHORT).show();
                 }
-            }
-        });
-
+            });
+        }
         return view;
     }
 
     private long insertarEjercicioEnBaseDeDatos(String nombre, String descripcion, String musculoPrincipal, int idRutina, int idDiaEntreno) {
-        BaseDatos baseDatos = new BaseDatos(getActivity());
-        return baseDatos.insertEjercicio(nombre, descripcion, musculoPrincipal, idRutina, idDiaEntreno);
+        try (BaseDatos baseDatos = new BaseDatos(getActivity())) {
+            return baseDatos.insertEjercicio(nombre, descripcion, musculoPrincipal, idRutina, idDiaEntreno);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return -1;
+        }
     }
 
     @Override

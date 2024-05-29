@@ -12,11 +12,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
-import java.util.ListResourceBundle;
-
 public class AllEjerciciosAdapter extends RecyclerView.Adapter<AllEjerciciosAdapter.AllEjerciciosViewHolder> {
-    private List<Ejercicios> ejerciciosList;
-    private Context context;
+    private final List<Ejercicios> ejerciciosList;
+    private final Context context;
 
     public AllEjerciciosAdapter(Context context, List<Ejercicios> ejerciciosList) {
         this.context = context;
@@ -35,15 +33,13 @@ public class AllEjerciciosAdapter extends RecyclerView.Adapter<AllEjerciciosAdap
         final Ejercicios ejercicio = ejerciciosList.get(position);
         holder.nombreEjercicio.setText(ejercicio.getNombreEjercicio());
 
-        BaseDatos baseDatos = new BaseDatos(context);
-        List<Registro> registrosList = baseDatos.getRegistrosPorEjercicio(ejercicio.getIdEjercicio());
-        AllRegistrosAdapter allRegistrosAdapter = new AllRegistrosAdapter(registrosList);
-        holder.recyclerViewRegistrosPorEjercicio.setLayoutManager(new LinearLayoutManager(context));
-        holder.recyclerViewRegistrosPorEjercicio.setAdapter(allRegistrosAdapter);
+        try (BaseDatos baseDatos = new BaseDatos(context)) {
+            List<Registro> registrosList = baseDatos.getRegistrosPorEjercicio(ejercicio.getIdEjercicio());
+            AllRegistrosAdapter allRegistrosAdapter = new AllRegistrosAdapter(registrosList);
+            holder.recyclerViewRegistrosPorEjercicio.setLayoutManager(new LinearLayoutManager(context));
+            holder.recyclerViewRegistrosPorEjercicio.setAdapter(allRegistrosAdapter);
 
-        holder.cardViewRegistros.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+            holder.cardViewRegistros.setOnClickListener(v -> {
                 if (!registrosList.isEmpty()) {
                     holder.sinRegistrosTextView.setVisibility(View.GONE);
                     if (holder.recyclerViewRegistrosPorEjercicio.getVisibility() == View.VISIBLE) {
@@ -58,8 +54,10 @@ public class AllEjerciciosAdapter extends RecyclerView.Adapter<AllEjerciciosAdap
                         holder.sinRegistrosTextView.setVisibility(View.GONE);
                     }
                 }
-            }
-        });
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -67,7 +65,7 @@ public class AllEjerciciosAdapter extends RecyclerView.Adapter<AllEjerciciosAdap
         return ejerciciosList.size();
     }
 
-    public class AllEjerciciosViewHolder extends RecyclerView.ViewHolder {
+    public static class AllEjerciciosViewHolder extends RecyclerView.ViewHolder {
         CardView cardViewRegistros;
         TextView nombreEjercicio;
         RecyclerView recyclerViewRegistrosPorEjercicio;

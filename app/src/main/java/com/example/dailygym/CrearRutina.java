@@ -3,31 +3,22 @@ package com.example.dailygym;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.DialogInterface;
 import android.os.Bundle;
-import android.os.Parcelable;
-import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RadioGroup;
-import android.widget.Spinner;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class CrearRutina extends AppCompatActivity {
-
-    private List<DiasEntreno> diasSeleccionados = new ArrayList<>();
     private EditText editTextNombreRutina;
     private EditText editTextDescripcionRutina;
     private RecyclerView recyclerViewDias;
-    private Button btnGuardarRutina;
     private RadioGroup rgAutor;
 
     @Override
@@ -39,55 +30,51 @@ public class CrearRutina extends AppCompatActivity {
         editTextDescripcionRutina = findViewById(R.id.editTextDescripcionRutina);
         rgAutor = findViewById(R.id.rgAutor);
         recyclerViewDias = findViewById(R.id.recyclerViewDias);
-        btnGuardarRutina = findViewById(R.id.btnGuardarRutina);
+        Button btnGuardarRutina = findViewById(R.id.btnGuardarRutina);
 
         recyclerViewDias.setLayoutManager(new GridLayoutManager(this, 2));
         String[] diasSemana = {"Lunes","Martes","Miércoles","Jueves","Viernes","Sábado","Domingo"};
         MyAdapter adapter = new MyAdapter(diasSemana);
         recyclerViewDias.setAdapter(adapter);
 
-        btnGuardarRutina.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String nombreRutina = editTextNombreRutina.getText().toString().trim();
-                String descripcionRutina = editTextDescripcionRutina.getText().toString().trim();
+        btnGuardarRutina.setOnClickListener(v -> {
+            String nombreRutina = editTextNombreRutina.getText().toString().trim();
+            String descripcionRutina = editTextDescripcionRutina.getText().toString().trim();
 
-                int selectedId = rgAutor.getCheckedRadioButtonId();
-                String autorRutina = "";
-                if (selectedId == R.id.rbHombre){
-                    autorRutina = "Hombre";
-                } else if (selectedId == R.id.rbMujer) {
-                    autorRutina = "Mujer";
-                }
+            int selectedId = rgAutor.getCheckedRadioButtonId();
+            String autorRutina = "";
+            if (selectedId == R.id.rbHombre){
+                autorRutina = "Hombre";
+            } else if (selectedId == R.id.rbMujer) {
+                autorRutina = "Mujer";
+            }
 
-                MyAdapter adapter = (MyAdapter) recyclerViewDias.getAdapter();
-                boolean seleccionDias = false;
-                for (int i = 0; i < adapter.getItemCount(); i++) {
-                    if (adapter.isSelected(i)) {
+            MyAdapter myadapter = (MyAdapter) recyclerViewDias.getAdapter();
+            boolean seleccionDias = false;
+
+            if (myadapter != null) {
+                for (int i = 0; i < myadapter.getItemCount(); i++) {
+                    if (myadapter.isSelected(i)) {
                         seleccionDias = true;
                         break;
                     }
                 }
-                if (nombreRutina.isEmpty() || descripcionRutina.isEmpty() || !seleccionDias || autorRutina.isEmpty()) {
-                    Toast.makeText(getApplicationContext(), "Completa todos los datos para crear tu rutina", Toast.LENGTH_LONG).show();
-                    return;
-                }
+            }
 
-                if (guardarRutina(nombreRutina, descripcionRutina, autorRutina)) {
-                    mostrarDialogoRutinaCreada();
-                } else {
-                    Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_LONG).show();
-                }
+            if (nombreRutina.isEmpty() || descripcionRutina.isEmpty() || !seleccionDias || autorRutina.isEmpty()) {
+                Toast.makeText(getApplicationContext(), "Completa todos los datos para crear tu rutina", Toast.LENGTH_LONG).show();
+                return;
+            }
+
+            if (guardarRutina(nombreRutina, descripcionRutina, autorRutina)) {
+                mostrarDialogoRutinaCreada();
+            } else {
+                Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_LONG).show();
             }
         });
 
         ImageButton btnBack = findViewById(R.id.btnBack);
-        btnBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mostrarDialogoConfirmacion();
-            }
-        });
+        btnBack.setOnClickListener(v -> mostrarDialogoConfirmacion());
     }
 
     private boolean guardarRutina(String nombre, String descripcion, String autorRutina) {
@@ -95,19 +82,26 @@ public class CrearRutina extends AppCompatActivity {
 
         List<DiasEntreno> diasEntreno = new ArrayList<>();
 
-        for (int i = 0; i < adapter.getItemCount(); i++) {
-            if (adapter.isSelected(i)) {
-                DiasEntreno diaEntreno = new DiasEntreno(i, adapter.getItem(i));
-                diasEntreno.add(diaEntreno);
+        if (adapter != null) {
+            for (int i = 0; i < adapter.getItemCount(); i++) {
+                if (adapter.isSelected(i)) {
+                    DiasEntreno diaEntreno = new DiasEntreno(i, adapter.getItem(i));
+                    diasEntreno.add(diaEntreno);
                 }
             }
+        }
+
         Rutinas rutina = new Rutinas(nombre, descripcion, autorRutina, diasEntreno);
 
-        BaseDatos db = new BaseDatos(this);
-        long id = db.insertRutina(rutina);
+        long id = -1;
+        try (BaseDatos db = new BaseDatos(this)) {
+            id = db.insertRutina(rutina);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         if (id != -1) {
-            rutina.setIdRutina((int) id);  // Asignar el ID autogenerado
+            rutina.setIdRutina((int) id);
             return true;
         } else {
             return false;
@@ -117,12 +111,7 @@ public class CrearRutina extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("¿Quiere cerrar esta ventana?");
         builder.setMessage("Los cambios no se guardarán");
-        builder.setPositiveButton("Sí", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                finish();
-            }
-        });
+        builder.setPositiveButton("Sí", (dialog, which) -> finish());
         builder.setNegativeButton("Cancelar", null);
         AlertDialog dialog = builder.create();
         dialog.show();
@@ -132,12 +121,7 @@ public class CrearRutina extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("¡Rutina creada!");
         builder.setMessage("Ya puedes escoger tu nueva rutina");
-        builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                finish();
-            }
-        });
+        builder.setPositiveButton("Aceptar", (dialog, which) -> finish());
         AlertDialog dialog = builder.create();
         dialog.show();
     }
