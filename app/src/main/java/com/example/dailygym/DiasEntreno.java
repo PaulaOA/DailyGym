@@ -1,18 +1,11 @@
 package com.example.dailygym;
 
 import java.io.Serializable;
-import java.util.List;
-
 public class DiasEntreno implements Serializable {
-    private int idDiaEntreno;
-    private String nombreDia;
+    private final int idDiaEntreno;
+    private final String nombreDia;
     private String descripcionDia;
 
-    public DiasEntreno(int idDiaEntreno, String nombreDia, String descripcionDia) {
-        this.idDiaEntreno = idDiaEntreno;
-        this.nombreDia = nombreDia;
-        this.descripcionDia = descripcionDia;
-    }
     public DiasEntreno(int idDiaEntreno, String nombreDia) {
         this.idDiaEntreno = idDiaEntreno;
         this.nombreDia = nombreDia;

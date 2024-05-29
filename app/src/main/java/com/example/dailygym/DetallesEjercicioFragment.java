@@ -118,7 +118,6 @@ public class DetallesEjercicioFragment extends Fragment implements NuevoRegistro
         getParentFragmentManager().setFragmentResultListener("registroGuardado", this, new FragmentResultListener() {
             @Override
             public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
-                // Actualizar el RecyclerView después de guardar el registro
                 cargarRegistros(ejercicio.getIdEjercicio());
             }
         });

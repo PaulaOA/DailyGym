@@ -73,9 +73,7 @@ public class DetallesDiaEntrenoFragment extends Fragment {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerViewEjerciciosDia.setLayoutManager(layoutManager);
 
-        TextView tVNombreRutina = view.findViewById(R.id.tVNombreRutina);
         TextView tVNombreDia = view.findViewById(R.id.tVNombreDia);
-        tVNombreRutina.setText(nombreRutina);
         tVNombreDia.setText(nombreDia);
 
         int idRutina = getArguments().getInt(ARG_ID_RUTINA);

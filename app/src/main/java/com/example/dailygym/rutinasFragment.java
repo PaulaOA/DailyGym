@@ -6,9 +6,9 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.cardview.widget.CardView;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,21 +16,15 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import java.util.List;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link rutinasFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class rutinasFragment extends Fragment {
     public rutinasFragment() {
     }
 
-    public static rutinasFragment newInstance(String param1, String param2) {
+    public static rutinasFragment newInstance() {
         rutinasFragment fragment = new rutinasFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
@@ -40,8 +34,6 @@ public class rutinasFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-        }
     }
 
     @Override
@@ -49,34 +41,22 @@ public class rutinasFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_rutinas, container, false);
 
-        Rutinas[] rutinas = new Rutinas[]{
-                new Rutinas(1, "Hipertrofia Glúteos", "Aumenta tus glúteos en 12 semanas", "Mujer"),
-                new Rutinas(2, "Reto Espalda", "Fortalece tu espalda", "Hombre"),
-                new Rutinas(3, "Método FullBody", "Entrena todo tu cuerpo", "Mujer"),
-                new Rutinas(4, "Training Plan", "Ponte en forma", "Hombre")
-        };
+        BaseDatos baseDatos = new BaseDatos(getContext());
+        List<Rutinas> rutinasList = baseDatos.getAllRutinas();
 
-        ListView listaRutinas = (ListView) rootView.findViewById(R.id.listaRutinas);
-        Adaptador adaptadorListaRutinas = new Adaptador(getContext() , rutinas);
-        listaRutinas.setAdapter(adaptadorListaRutinas);
+        RecyclerView recyclerViewRutinas = rootView.findViewById(R.id.recyclerViewListaRutinas);
+        recyclerViewRutinas.setLayoutManager(new LinearLayoutManager(getContext()));
+        Adaptador adaptadorListaRutinas = new Adaptador(getContext(), rutinasList);
+        recyclerViewRutinas.setAdapter(adaptadorListaRutinas);
 
-        Button btnCrearRutina = (Button) rootView.findViewById(R.id.btnCrearRutina);
-
-        btnCrearRutina.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), CrearRutina.class);
-                startActivity(intent);
-            }
+        Button btnCrearRutina = rootView.findViewById(R.id.btnCrearRutina);
+        btnCrearRutina.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), CrearRutina.class);
+            startActivity(intent);
         });
 
         TextView textViewTusRutinas = rootView.findViewById(R.id.textViewTusRutinas);
-        textViewTusRutinas.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ((MainActivity) requireActivity()).replaceRutinasFragment(new TusRutinasFragment(), true);
-            }
-        });
+        textViewTusRutinas.setOnClickListener(v -> ((MainActivity) requireActivity()).replaceRutinasFragment(new TusRutinasFragment(), true));
 
         actualizarRutinaPrincipalUI(rootView);
         return rootView;
@@ -101,7 +81,6 @@ public class rutinasFragment extends Fragment {
         TextView textViewNombreRutinaPrincipal = view.findViewById(R.id.textViewNombreRutinaPrincipal);
         TextView textViewDescripcionRutinaPrincipal = view.findViewById(R.id.textViewDescripcionRutinaPrincipal);
         TextView textViewPorDefecto = view.findViewById(R.id.textViewPorDefecto);
-        Button btnEntrenar = view.findViewById(R.id.btnEntrenar);
         ImageView imagenFondo = view.findViewById(R.id.imagenFondo);
 
         if (rutinaPrincipal != null) {
@@ -111,7 +90,6 @@ public class rutinasFragment extends Fragment {
             textViewNombreRutinaPrincipal.setVisibility(View.VISIBLE);
             textViewDescripcionRutinaPrincipal.setVisibility(View.VISIBLE);
             textViewPorDefecto.setVisibility(View.GONE);
-            btnEntrenar.setVisibility(View.VISIBLE);
             String autorRutina =  rutinaPrincipal.getAutorRutina();
 
             if (autorRutina != null && autorRutina.equals("Hombre")) {
@@ -124,7 +102,6 @@ public class rutinasFragment extends Fragment {
             textViewNombreRutinaPrincipal.setVisibility(View.GONE);
             textViewDescripcionRutinaPrincipal.setVisibility(View.GONE);
             textViewPorDefecto.setVisibility(View.VISIBLE);
-            btnEntrenar.setVisibility(View.GONE);
             imagenFondo.setImageResource(R.color.white);
         }
         cardViewRutinaPrincipal.setVisibility(View.VISIBLE);

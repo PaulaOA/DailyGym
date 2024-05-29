@@ -40,29 +40,19 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/tVNombreRutina"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="15dp"
-                        android:gravity="center"
-                        android:text="Nombre Rutina"
-                        android:textColor="@color/black"
-                        android:textSize="20dp" />
+                    android:orientation="vertical"
+                    android:background="#F5F0F6">
 
                     <TextView
                         android:id="@+id/tVNombreDia"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_marginTop="15dp"
                         android:gravity="center"
+                        android:layout_margin="15dp"
                         android:text="Nombre Dia"
                         android:textColor="@color/black"
-                        android:textSize="40dp" />
+                        android:textSize="30dp" />
 
                 </LinearLayout>
             </androidx.cardview.widget.CardView>

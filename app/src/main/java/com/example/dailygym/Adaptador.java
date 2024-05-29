@@ -4,61 +4,64 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.RecyclerView;
 
-public class Adaptador extends ArrayAdapter<Rutinas> {
+import java.util.List;
 
-    static class ViewHolder {
-        TextView nombreRutina;
-        TextView descripcionRutina;
-        ImageView imagenRutina;
+public class Adaptador extends RecyclerView.Adapter<Adaptador.ViewHolder> {
+
+    private final List<Rutinas> datosRutina;
+    private final Context context;
+
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        public TextView nombreRutina;
+        public TextView descripcionRutina;
+        public ImageView imagenRutina;
+
+        public ViewHolder(View itemView) {
+            super(itemView);
+            nombreRutina = itemView.findViewById(R.id.nombreRutina);
+            descripcionRutina = itemView.findViewById(R.id.descripcionRutina);
+            imagenRutina = itemView.findViewById(R.id.imagenRutina);
+        }
     }
 
-    public Adaptador(@NonNull Context context, Rutinas[] datosRutina) {
-        super(context, R.layout.vista_rutina, datosRutina);
-
+    public Adaptador(Context context, List<Rutinas> datosRutina) {
+        this.context = context;
+        this.datosRutina = datosRutina;
     }
 
     @NonNull
     @Override
-    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        ViewHolder viewHolder;
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        LayoutInflater inflater = LayoutInflater.from(context);
+        View view = inflater.inflate(R.layout.vista_rutina, parent, false);
+        return new ViewHolder(view);
+    }
 
-        if (convertView == null) {
-            LayoutInflater inflater = LayoutInflater.from(getContext());
-            convertView = inflater.inflate(R.layout.vista_rutina, parent, false);
+    @Override
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        Rutinas rutina = datosRutina.get(position);
 
-            viewHolder = new ViewHolder();
-            viewHolder.nombreRutina = convertView.findViewById(R.id.nombreRutina);
-            viewHolder.descripcionRutina = convertView.findViewById(R.id.descripcionRutina);
-            viewHolder.imagenRutina = convertView.findViewById(R.id.imagenRutina);
+        holder.nombreRutina.setText(rutina.getNombreRutina());
+        holder.descripcionRutina.setText(rutina.getDescripcionRutina());
 
-            convertView.setTag(viewHolder);
-        } else {
-            viewHolder = (ViewHolder) convertView.getTag();
+        switch (rutina.getAutorRutina()) {
+            case "Mujer":
+                holder.imagenRutina.setImageResource(R.drawable.gym_mujer);
+                break;
+            case "Hombre":
+                holder.imagenRutina.setImageResource(R.drawable.gym_hombre);
+                break;
         }
+    }
 
-        Rutinas rutina = getItem(position);
-
-        if(rutina != null) {
-            viewHolder.nombreRutina.setText(rutina.getNombreRutina());
-            viewHolder.descripcionRutina.setText(rutina.getDescripcionRutina());
-
-            switch (rutina.getAutorRutina()) {
-                case "Mujer":
-                    viewHolder.imagenRutina.setImageResource(R.drawable.gym_mujer);
-                    break;
-                case "Hombre":
-                    viewHolder.imagenRutina.setImageResource(R.drawable.gym_hombre);
-                    break;
-            }
-        }
-
-        return convertView;
+    @Override
+    public int getItemCount() {
+        return datosRutina.size();
     }
 }

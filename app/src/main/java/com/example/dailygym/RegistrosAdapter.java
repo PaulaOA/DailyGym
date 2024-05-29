@@ -1,5 +1,6 @@
 package com.example.dailygym;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,8 +14,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 public class RegistrosAdapter extends RecyclerView.Adapter<RegistrosAdapter.RegistroViewHolder> {
-    private List<Registro> registros;
-    private Context context;
+    private final List<Registro> registros;
+    private final Context context;
 
     public RegistrosAdapter(Context context, List<Registro> registros) {
         this.context = context;
@@ -30,15 +31,10 @@ public class RegistrosAdapter extends RecyclerView.Adapter<RegistrosAdapter.Regi
     @Override
     public void onBindViewHolder(@NonNull RegistroViewHolder holder, int position) {
         Registro registro = registros.get(position);
-        holder.bind(registro);
+        holder.bind(registro, position);
 
         holder.itemView.setOnClickListener(v -> {
-            ConfirmDeleteDialogFragment dialog = new ConfirmDeleteDialogFragment(new ConfirmDeleteDialogFragment.ConfirmDeleteListener() {
-                @Override
-                public void onConfirmDelete(int position) {
-                    deleteRegistro(position);
-                }
-            }, position);
+            ConfirmDeleteDialogFragment dialog = new ConfirmDeleteDialogFragment(this::deleteRegistro, position);
             dialog.show(((FragmentActivity) context).getSupportFragmentManager(), "ConfirmDeleteDialog");
         });
     }
@@ -65,11 +61,17 @@ public class RegistrosAdapter extends RecyclerView.Adapter<RegistrosAdapter.Regi
             textViewFecha = itemView.findViewById(R.id.textViewFecha);
         }
 
-        public void bind(Registro registro) {
+        @SuppressLint("SetTextI18n")
+        public void bind(Registro registro, int position) {
             textViewPeso.setText("Peso: " + registro.getPeso() + " kg");
             textViewRepeticiones.setText("Repeticiones: " + registro.getRepeticiones());
             textViewSeries.setText("Series: " + registro.getSeries());
-            textViewFecha.setText(registro.getFecha());
+            if (position == 0 || !registro.getFecha().equals(registros.get(position - 1).getFecha())) {
+                textViewFecha.setVisibility(View.VISIBLE);
+                textViewFecha.setText(registro.getFecha());
+            } else {
+                textViewFecha.setVisibility(View.GONE);
+            }
         }
     }
 }
