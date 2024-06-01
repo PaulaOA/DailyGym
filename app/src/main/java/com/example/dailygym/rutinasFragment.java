@@ -15,20 +15,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.List;
 
 public class rutinasFragment extends Fragment {
     public rutinasFragment() {
-    }
-
-    public static rutinasFragment newInstance() {
-        rutinasFragment fragment = new rutinasFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
     }
 
     @Override

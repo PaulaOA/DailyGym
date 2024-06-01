@@ -21,8 +21,6 @@ public class NuevoRegistroDialogFragment extends DialogFragment {
     private int idEjercicio;
     private int idRutina;
     private int idDiaEntreno;
-    private RegistroGuardadoListener registroGuardadoListener;
-
 
     public NuevoRegistroDialogFragment() {
     }
@@ -43,29 +41,26 @@ public class NuevoRegistroDialogFragment extends DialogFragment {
             idDiaEntreno = getArguments().getInt("idDiaEntreno");
         }
 
-        btnGuardarRegistro.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String repeticiones = editTextRepeticiones.getText().toString();
-                String peso = editTextPeso.getText().toString();
-                String series = editTextSeries.getText().toString();
+        btnGuardarRegistro.setOnClickListener(v -> {
+            String repeticiones = editTextRepeticiones.getText().toString();
+            String peso = editTextPeso.getText().toString();
+            String series = editTextSeries.getText().toString();
 
-                if (!repeticiones.isEmpty() && !peso.isEmpty() && !series.isEmpty()) {
-                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-                    String fechaActual = sdf.format(new Date());
+            if (!repeticiones.isEmpty() && !peso.isEmpty() && !series.isEmpty()) {
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+                String fechaActual = sdf.format(new Date());
 
-                    long idRegistro = new BaseDatos(getActivity()).insertRegistro(idEjercicio, idRutina, idDiaEntreno, Double.parseDouble(peso), Integer.parseInt(repeticiones), Integer.parseInt(series), fechaActual);
-                    if (idRegistro != -1) {
-                        Toast.makeText(getActivity(), "Registro guardado: Repeticiones = " + repeticiones + ", Peso = " + peso + ", Series = " + series, Toast.LENGTH_SHORT).show();
-                        dismiss();
-                        Bundle result = new Bundle();
-                        getParentFragmentManager().setFragmentResult("registroGuardado", result);
-                    } else {
-                        Toast.makeText(getActivity(), "Error al guardar el registro", Toast.LENGTH_SHORT).show();
-                    }
+                long idRegistro = new BaseDatos(getActivity()).insertRegistro(idEjercicio, idRutina, idDiaEntreno, Double.parseDouble(peso), Integer.parseInt(repeticiones), Integer.parseInt(series), fechaActual);
+                if (idRegistro != -1) {
+                    Toast.makeText(getActivity(), "Registro guardado: Repeticiones = " + repeticiones + ", Peso = " + peso + ", Series = " + series, Toast.LENGTH_SHORT).show();
+                    dismiss();
+                    Bundle result = new Bundle();
+                    getParentFragmentManager().setFragmentResult("registroGuardado", result);
                 } else {
-                    Toast.makeText(getActivity(), "Por favor, complete todos los campos", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Error al guardar el registro", Toast.LENGTH_SHORT).show();
                 }
+            } else {
+                Toast.makeText(getActivity(), "Por favor, complete todos los campos", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -85,9 +80,5 @@ public class NuevoRegistroDialogFragment extends DialogFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-    }
-
-    public interface RegistroGuardadoListener {
-        void onRegistroGuardado();
     }
 }

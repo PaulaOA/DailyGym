@@ -31,10 +31,9 @@
 
                 <TextView
                     android:id="@+id/textTituloBar"
-                    android:layout_width="340dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_weight="1"
                     android:fontFamily="serif"
                     android:gravity="center"
                     android:text="Main Activity"

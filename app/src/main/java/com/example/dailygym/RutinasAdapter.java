@@ -2,7 +2,6 @@ package com.example.dailygym;
 
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,8 +16,8 @@ import java.util.List;
 
 public class RutinasAdapter extends RecyclerView.Adapter<RutinasAdapter.RutinasViewHolder> {
 
-    private List<Rutinas> rutinasList;
-    private Context context;
+    private final List<Rutinas> rutinasList;
+    private final Context context;
     private OnDeleteClickListener listener;
 
     public interface OnDeleteClickListener {
@@ -65,16 +64,11 @@ public class RutinasAdapter extends RecyclerView.Adapter<RutinasAdapter.RutinasV
             holder.imagenRutinaCreada.setImageResource(R.drawable.gym_hombre);
         }
 
+        holder.itemView.setOnClickListener(v -> {
+            Rutinas rutinaSeleccionada = rutinasList.get(holder.getAbsoluteAdapterPosition());
 
-
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Rutinas rutinaSeleccionada = rutinasList.get(holder.getAbsoluteAdapterPosition());
-
-                DetallesRutinaFragment detallesFragment = DetallesRutinaFragment.newInstance(rutinaSeleccionada);
-                ((MainActivity) context).replaceRutinasFragment(detallesFragment, true);
-            }
+            DetallesRutinaFragment detallesFragment = DetallesRutinaFragment.newInstance(rutinaSeleccionada);
+            ((MainActivity) context).replaceRutinasFragment(detallesFragment, true);
         });
     }
 
@@ -100,24 +94,15 @@ public class RutinasAdapter extends RecyclerView.Adapter<RutinasAdapter.RutinasV
             btnBorrarRutina = itemView.findViewById(R.id.btnBorrarRutina);
             imagenRutinaCreada = itemView.findViewById(R.id.imagenRutinaCreada);
 
-            btnBorrarRutina.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    final int position = getAbsoluteAdapterPosition();
-                    if (position != RecyclerView.NO_POSITION && listener != null) {
-                        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                        builder.setTitle("Eliminar rutina");
-                        builder.setMessage("¿Desea eliminar esta rutina?");
-                        builder.setPositiveButton("Sí", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                listener.onDeleteClick(position);
-                            }
-                        });
-                        builder.setNegativeButton("Cancelar", null);
-                        builder.show();
-
-                    }
+            btnBorrarRutina.setOnClickListener(v -> {
+                final int position = getAbsoluteAdapterPosition();
+                if (position != RecyclerView.NO_POSITION && listener != null) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                    builder.setTitle("Eliminar rutina");
+                    builder.setMessage("¿Desea eliminar esta rutina?");
+                    builder.setPositiveButton("Sí", (dialog, which) -> listener.onDeleteClick(position));
+                    builder.setNegativeButton("Cancelar", null);
+                    builder.show();
                 }
             });
         }

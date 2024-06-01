@@ -5,7 +5,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,7 +19,6 @@ import java.util.List;
 public class DetallesRutinaFragment extends Fragment {
    private static final String ARG_RUTINA = "rutina";
    private Rutinas rutina;
-
 
     public DetallesRutinaFragment() {
     }
@@ -65,14 +63,10 @@ public class DetallesRutinaFragment extends Fragment {
                 TextView textViewNombreDia = cardViewDia.findViewById(R.id.textViewNombreDia);
                 textViewNombreDia.setText(diaEntreno.getNombreDia());
 
-                cardViewDia.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Fragment fragment = DetallesDiaEntrenoFragment.newInstance(diaEntreno, rutina.getIdRutina(), diaEntreno.getIdDiaEntreno(), rutina.getNombreRutina(), diaEntreno.getNombreDia());
-                        ((MainActivity) requireActivity()).replaceRutinasFragment(fragment, true);
-                    }
+                cardViewDia.setOnClickListener(v -> {
+                    Fragment fragment = DetallesDiaEntrenoFragment.newInstance(diaEntreno, rutina.getIdRutina(), diaEntreno.getIdDiaEntreno(), diaEntreno.getNombreDia());
+                    ((MainActivity) requireActivity()).replaceRutinasFragment(fragment, true);
                 });
-
                 layoutDiasEntreno.addView(cardViewDia);
             }
         }
@@ -84,12 +78,9 @@ public class DetallesRutinaFragment extends Fragment {
             layoutDetalles.setBackgroundResource(R.drawable.mujer);
         }
 
-        btnSeguirRutina.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setRutinaPrincipal(rutina);
-                Toast.makeText(getActivity(), "Rutina principal establecida", Toast.LENGTH_SHORT).show();
-            }
+        btnSeguirRutina.setOnClickListener(v -> {
+            setRutinaPrincipal(rutina);
+            Toast.makeText(getActivity(), "Rutina principal establecida", Toast.LENGTH_SHORT).show();
         });
         return view;
     }

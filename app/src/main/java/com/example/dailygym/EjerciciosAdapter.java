@@ -14,20 +14,15 @@ import java.util.List;
 
 public class EjerciciosAdapter extends RecyclerView.Adapter<EjerciciosAdapter.EjercicioViewHolder> {
     private static List<Ejercicios> ejerciciosList;
-    private Context context;
-    private int idRutina;
-    private int idDiaEntreno;
+    private final Context context;
+    private final int idRutina;
+    private final int idDiaEntreno;
 
     public EjerciciosAdapter(Context context, List<Ejercicios> ejerciciosList, int idRutina, int idDiaEntreno) {
-        this.ejerciciosList = ejerciciosList;
+        EjerciciosAdapter.ejerciciosList = ejerciciosList;
         this.context = context;
         this.idRutina = idRutina;
         this.idDiaEntreno = idDiaEntreno;
-    }
-
-    public EjerciciosAdapter(Context context, List<Ejercicios> ejerciciosList) {
-        this.ejerciciosList = ejerciciosList;
-        this.context = context;
     }
 
     @NonNull
@@ -49,33 +44,20 @@ public class EjerciciosAdapter extends RecyclerView.Adapter<EjerciciosAdapter.Ej
     }
 
     public static class EjercicioViewHolder extends RecyclerView.ViewHolder {
-        private TextView textViewNombre;
-        private TextView textViewDescripcion;
-        private TextView textViewMusculoPrincipal;
-        private Context context;
-        private int idRutina;
-        private int idDiaEntreno;
+        private final TextView textViewNombre;
 
         public EjercicioViewHolder(@NonNull View itemView, Context context, int idRutina, int idDiaEntreno) {
             super(itemView);
-            this.context = context;
-            this.idRutina = idRutina;
-            this.idDiaEntreno = idDiaEntreno;
             textViewNombre = itemView.findViewById(R.id.textViewNombreEjercicio);
-            /*textViewDescripcion = itemView.findViewById(R.id.textViewDescripcionEjercicio);
-            textViewMusculoPrincipal = itemView.findViewById(R.id.textViewMusculoPrincipal);*/
 
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    int position = getAbsoluteAdapterPosition();
-                    if (position != RecyclerView.NO_POSITION) {
-                        Ejercicios ejercicio = ejerciciosList.get(position);
+            itemView.setOnClickListener(v -> {
+                int position = getAbsoluteAdapterPosition();
+                if (position != RecyclerView.NO_POSITION) {
+                    Ejercicios ejercicio = ejerciciosList.get(position);
 
-                        Fragment detallesEjercicioFragment = DetallesEjercicioFragment.newInstance(ejercicio, idRutina, idDiaEntreno);
+                    Fragment detallesEjercicioFragment = DetallesEjercicioFragment.newInstance(ejercicio, idRutina, idDiaEntreno);
 
-                        ((MainActivity) context).replaceRutinasFragment(detallesEjercicioFragment, true);
-                    }
+                    ((MainActivity) context).replaceRutinasFragment(detallesEjercicioFragment, true);
                 }
             });
         }
@@ -83,11 +65,9 @@ public class EjerciciosAdapter extends RecyclerView.Adapter<EjerciciosAdapter.Ej
         public void bind(Ejercicios ejercicio) {
             String nombreConEspacios = "  " + ejercicio.getNombreEjercicio();
             textViewNombre.setText(nombreConEspacios);
-            /*textViewDescripcion.setText(ejercicio.getDescripcionEjercicio());
-            textViewMusculoPrincipal.setText(ejercicio.getMusculoPrincipal());*/
         }
     }
     public void setEjerciciosList(List<Ejercicios> ejerciciosList) {
-        this.ejerciciosList = ejerciciosList;
+        EjerciciosAdapter.ejerciciosList = ejerciciosList;
     }
 }

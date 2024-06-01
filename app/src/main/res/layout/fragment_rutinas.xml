@@ -38,7 +38,7 @@
                 android:paddingLeft="10dp"
                 android:paddingTop="10dp"
                 android:textColor="@color/black"
-                android:textSize="30dp"
+                android:textSize="30sp"
                 android:text="¡Hola de nuevo!"/>
 
             <TextView
@@ -51,7 +51,7 @@
                 android:paddingBottom="10dp"
                 android:text="Tu rutina actual"
                 android:textColor="@color/black"
-                android:textSize="20dp" />
+                android:textSize="20sp" />
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardViewRutinaPrincipal"
@@ -74,7 +74,7 @@
                     android:layout_height="wrap_content"
                     android:text="Aún no has seleccionado una rutina para entrenar"
                     android:layout_gravity="center"
-                    android:textSize="18dp"
+                    android:textSize="18sp"
                     android:visibility="gone"
                     android:fontFamily="serif"
                     android:textAlignment="center"
@@ -87,7 +87,7 @@
                     android:text="Nombre"
                     android:layout_gravity="top|center"
                     android:layout_marginTop="25dp"
-                    android:textSize="30dp"
+                    android:textSize="30sp"
                     android:textColor="@color/white"
                     android:fontFamily="sans-serif-black"
                     android:visibility="gone"/>
@@ -102,7 +102,7 @@
                     android:layout_marginTop="65dp"
                     android:textColor="@color/white"
                     android:textAlignment="center"
-                    android:textSize="20dp"/>
+                    android:textSize="20sp"/>
             </androidx.cardview.widget.CardView>
 
             <TextView
@@ -115,7 +115,7 @@
                 android:paddingBottom="10dp"
                 android:text="Tus rutinas"
                 android:textColor="@color/black"
-                android:textSize="20dp" />
+                android:textSize="20sp" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerViewListaRutinas"
@@ -136,7 +136,7 @@
                 android:layout_margin="10dp"
                 android:text="Crear Rutina"
                 android:textColor="@color/white"
-                android:textSize="16dp"
+                android:textSize="16sp"
                 android:textStyle="bold" />
 
         </LinearLayout>

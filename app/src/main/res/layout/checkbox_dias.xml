@@ -10,5 +10,5 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Día de la semana"
-            android:textSize="18dp"/>
+            android:textSize="18sp"/>
     </LinearLayout>

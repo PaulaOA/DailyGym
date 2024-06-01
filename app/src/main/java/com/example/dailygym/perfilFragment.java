@@ -2,8 +2,6 @@ package com.example.dailygym;
 
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -13,7 +11,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -22,24 +19,13 @@ import java.util.List;
 public class perfilFragment extends Fragment {
     private EditText editTextNombre, editTextEdad, editTextPeso, editTextAltura;
     private Spinner spinnerSexo, spinnerObjetivo;
-    private Button btnGuardarPerfil;
 
     public perfilFragment() {
-    }
-
-    public static perfilFragment newInstance(String param1, String param2) {
-        perfilFragment fragment = new perfilFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-
-        }
     }
 
     @Override
@@ -51,17 +37,12 @@ public class perfilFragment extends Fragment {
         editTextEdad = view.findViewById(R.id.editTextEdadPerfil);
         editTextPeso = view.findViewById(R.id.editTextPeso);
         editTextAltura = view.findViewById(R.id.editTextAltura);
-        btnGuardarPerfil = view.findViewById(R.id.btnGuardarPerfil);
+        Button btnGuardarPerfil = view.findViewById(R.id.btnGuardarPerfil);
 
         spinnerSexo = view.findViewById(R.id.spinnerSexoPerfil);
         spinnerObjetivo = view.findViewById(R.id.spinnerObjetivoPerfil);
 
-        btnGuardarPerfil.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                guardarPerfil();
-            }
-        });
+        btnGuardarPerfil.setOnClickListener(v -> guardarPerfil());
 
         List<String> opcionesSexo = new ArrayList<>();
         opcionesSexo.add("Mujer");
@@ -102,7 +83,7 @@ public class perfilFragment extends Fragment {
                 spinnerSexo.setSelection(positionSexo);
             }
 
-            String objetivo = userProfile.getObjetivos();
+            String objetivo = userProfile.getObjetivo();
             if (objetivo != null) {
                 ArrayAdapter<CharSequence> adapterObjetivo = (ArrayAdapter<CharSequence>) spinnerObjetivo.getAdapter();
                 int positionObjetivo = adapterObjetivo.getPosition(objetivo);
@@ -125,7 +106,7 @@ public class perfilFragment extends Fragment {
         userProfile.setPeso(peso);
         userProfile.setAltura(altura);
         userProfile.setSexo(sexo);
-        userProfile.setObjetivos(objetivo);
+        userProfile.setObjetivo(objetivo);
 
         PreferenceManager preferenceManager = new PreferenceManager(requireContext());
         preferenceManager.saveUserProfile(userProfile);

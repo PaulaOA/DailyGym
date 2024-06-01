@@ -74,5 +74,4 @@ public class Rutinas implements Serializable {
     public String getAutorRutina() {
         return autorRutina;
     }
-
 }

@@ -6,7 +6,7 @@ public class UserProfile {
     private String sexo;
     private double peso;
     private double altura;
-    private String objetivos;
+    private String objetivo;
 
     public String getNombre() {
         return nombre;
@@ -28,8 +28,8 @@ public class UserProfile {
         return altura;
     }
 
-    public String getObjetivos() {
-        return objetivos;
+    public String getObjetivo() {
+        return objetivo;
     }
 
     public void setNombre(String nombre) {
@@ -52,7 +52,7 @@ public class UserProfile {
         this.altura = altura;
     }
 
-    public void setObjetivos(String objetivos) {
-        this.objetivos = objetivos;
+    public void setObjetivo(String objetivos) {
+        this.objetivo = objetivo;
     }
 }

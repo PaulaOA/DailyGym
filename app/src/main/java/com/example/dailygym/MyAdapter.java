@@ -5,17 +5,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Handler;
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
-    private String[] diasSemana;
-    private boolean[] diasSeleccionados;
-    private Handler handler = new Handler(Looper.getMainLooper());
+    private final String[] diasSemana;
+    private final boolean[] diasSeleccionados;
+    private final Handler handler = new Handler(Looper.getMainLooper());
 
     public MyAdapter(String[] diasSemana) {
         this.diasSemana = diasSemana;
@@ -53,34 +51,22 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
 
     public void setSelected (int position, boolean selected) {
         diasSeleccionados[position] = selected;
-        handler.post(new Runnable() {
-            @Override
-            public void run() {
-                notifyItemChanged(position);
-            }
-        });
+        handler.post(() -> notifyItemChanged(position));
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public CheckBox dia;
-        private MyAdapter adapter;
 
         public ViewHolder(View itemView, MyAdapter adapter) {
             super(itemView);
-            this.adapter = adapter;
             this.dia = itemView.findViewById(R.id.checkBoxDia);
 
-            this.dia.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    int position = getBindingAdapterPosition();
-                    if (position != RecyclerView.NO_POSITION) {
-                        adapter.setSelected (position,isChecked);
-                    }
+            this.dia.setOnCheckedChangeListener((buttonView, isChecked) -> {
+                int position = getBindingAdapterPosition();
+                if (position != RecyclerView.NO_POSITION) {
+                    adapter.setSelected (position,isChecked);
                 }
             });
-
         }
-
     }
 }

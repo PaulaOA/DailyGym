@@ -58,7 +58,7 @@
                         android:paddingBottom="10dp"
                         android:text="Nombre Rutina"
                         android:textColor="@color/white"
-                        android:textSize="30dp" />
+                        android:textSize="30sp" />
 
                     <TextView
                         android:id="@+id/textViewDetalleDescripcion"
@@ -70,7 +70,7 @@
                         android:paddingTop="10dp"
                         android:text="Descripción"
                         android:textColor="@color/white"
-                        android:textSize="20dp" />
+                        android:textSize="20sp" />
 
                     <Button
                         android:id="@+id/btnSeguirRutina"
@@ -80,7 +80,7 @@
                         android:layout_margin="20dp"
                         android:padding="15dp"
                         android:text="Seguir rutina"
-                        android:textSize="18dp" />
+                        android:textSize="18sp" />
 
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
@@ -96,7 +96,7 @@
                 android:paddingBottom="10dp"
                 android:text="Resumen de la rutina"
                 android:textColor="@color/black"
-                android:textSize="20dp" />
+                android:textSize="20sp" />
 
             <LinearLayout
                 android:id="@+id/layoutDiasEntreno"
@@ -104,38 +104,8 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"></LinearLayout>
 
-            <!--<LinearLayout
-                android:id="@+id/layoutHorizontal"
-                android:layout_width="match_parent"
-                android:layout_height="80dp"
-                android:layout_gravity="bottom"
-                android:orientation="horizontal">
-
-                <ImageButton
-                    android:id="@+id/btnEditarRutina"
-                    android:layout_width="70dp"
-                    android:layout_height="70dp"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="120dp"
-                    android:layout_marginRight="40dp"
-                    android:src="@drawable/edit"
-                    android:backgroundTint="@color/transparent"/>
-
-                <ImageButton
-                    android:id="@+id/btnEliminarRutina"
-                    android:layout_width="70dp"
-                    android:layout_height="70dp"
-                    android:layout_gravity="center"
-                    android:layout_marginRight="40dp"
-                    android:src="@drawable/delete"
-                    android:backgroundTint="@color/transparent"/>
-
-
-            </LinearLayout> -->
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
-
-
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/menuNavegacionDetallesRutina"
         android:layout_width="match_parent"

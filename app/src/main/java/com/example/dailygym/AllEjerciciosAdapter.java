@@ -71,7 +71,6 @@ public class AllEjerciciosAdapter extends RecyclerView.Adapter<AllEjerciciosAdap
         RecyclerView recyclerViewRegistrosPorEjercicio;
         TextView sinRegistrosTextView;
 
-
         public AllEjerciciosViewHolder(@NonNull View itemView) {
             super(itemView);
             cardViewRegistros = itemView.findViewById(R.id.cardViewRegistros);
@@ -80,5 +79,4 @@ public class AllEjerciciosAdapter extends RecyclerView.Adapter<AllEjerciciosAdap
             sinRegistrosTextView = itemView.findViewById(R.id.sinRegistrostextView);
         }
     }
-
 }

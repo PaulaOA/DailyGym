@@ -49,6 +49,4 @@ public class AllRegistrosAdapter extends RecyclerView.Adapter<AllRegistrosAdapte
             series = itemView.findViewById(R.id.textViewSeriesRegistro);
         }
     }
-
-
 }

@@ -10,9 +10,9 @@ public class PreferenceManager {
     private static final String KEY_SEXO = "sexo";
     private static final String KEY_PESO = "peso";
     private static final String KEY_ALTURA = "altura";
-    private static final String KEY_OBJETIVOS = "objetivos";
+    private static final String KEY_OBJETIVO = "objetivo";
 
-    private SharedPreferences sharedPreferences;
+    private final SharedPreferences sharedPreferences;
 
     public PreferenceManager(Context context) {
         sharedPreferences = context.getSharedPreferences(PREF_FILE_NAME, Context.MODE_PRIVATE);
@@ -25,7 +25,7 @@ public class PreferenceManager {
         editor.putString(KEY_SEXO, userProfile.getSexo());
         editor.putFloat(KEY_PESO, (float) userProfile.getPeso());
         editor.putFloat(KEY_ALTURA, (float) userProfile.getAltura());
-        editor.putString(KEY_OBJETIVOS, userProfile.getObjetivos());
+        editor.putString(KEY_OBJETIVO, userProfile.getObjetivo());
         editor.apply();
     }
 
@@ -36,7 +36,7 @@ public class PreferenceManager {
         userProfile.setSexo(sharedPreferences.getString(KEY_SEXO, ""));
         userProfile.setPeso(sharedPreferences.getFloat(KEY_PESO, 0));
         userProfile.setAltura(sharedPreferences.getFloat(KEY_ALTURA, 0));
-        userProfile.setObjetivos(sharedPreferences.getString(KEY_OBJETIVOS, ""));
+        userProfile.setObjetivo(sharedPreferences.getString(KEY_OBJETIVO, ""));
         return userProfile;
     }
 }

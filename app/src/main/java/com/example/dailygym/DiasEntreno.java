@@ -4,7 +4,6 @@ import java.io.Serializable;
 public class DiasEntreno implements Serializable {
     private final int idDiaEntreno;
     private final String nombreDia;
-    private String descripcionDia;
 
     public DiasEntreno(int idDiaEntreno, String nombreDia) {
         this.idDiaEntreno = idDiaEntreno;
@@ -18,9 +17,4 @@ public class DiasEntreno implements Serializable {
     public String getNombreDia() {
         return nombreDia;
     }
-
-    public String getDescripcionDia() {
-        return descripcionDia;
-    }
-
 }

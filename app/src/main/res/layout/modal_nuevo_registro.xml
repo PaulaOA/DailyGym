@@ -12,29 +12,34 @@
         android:id="@+id/editTextPeso"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Peso (kg)"
-        android:padding="8dp"
         android:layout_margin="10dp"
+        android:layout_marginBottom="8dp"
+        android:hint="Peso (kg)"
         android:inputType="numberDecimal"
-        android:layout_marginBottom="8dp"/>
+        android:minHeight="48dp"
+        android:padding="8dp" />
+
     <EditText
         android:id="@+id/editTextRepeticiones"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:layout_marginBottom="8dp"
         android:hint="Repeticiones"
         android:inputType="number"
-        android:layout_margin="10dp"
-        android:padding="8dp"
-        android:layout_marginBottom="8dp"/>
+        android:minHeight="48dp"
+        android:padding="8dp" />
+
     <EditText
         android:id="@+id/editTextSeries"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:layout_marginBottom="8dp"
         android:hint="Series"
         android:inputType="number"
-        android:layout_margin="10dp"
-        android:padding="8dp"
-        android:layout_marginBottom="8dp"/>
+        android:minHeight="48dp"
+        android:padding="8dp" />
 
     <Button
         android:id="@+id/btnGuardarRegistro"

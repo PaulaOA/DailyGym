@@ -22,7 +22,6 @@ public class BaseDatos extends SQLiteOpenHelper {
     private static final String TABLE_REGISTROS = "registros";
 
 
-
     private static final String COLUMN_ID = "id";
     private static final String COLUMN_NOMBRE = "nombre";
     private static final String COLUMN_DESCRIPCION = "descripcion";
@@ -264,5 +263,4 @@ public class BaseDatos extends SQLiteOpenHelper {
         db.delete(TABLE_REGISTROS, COLUMN_ID_REGISTRO + " = ?", new String[]{String.valueOf(idRegistro)});
         db.close();
     }
-
 }
