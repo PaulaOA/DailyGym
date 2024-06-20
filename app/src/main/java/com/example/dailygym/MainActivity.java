@@ -11,9 +11,6 @@ import android.widget.TextView;
 import com.example.dailygym.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
-
-    private Fragment currentFragment;
-    private Fragment rutinasCurrentFragment;
     ActivityMainBinding binding;
 
     @Override
@@ -23,10 +20,8 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        rutinasCurrentFragment = new rutinasFragment();
-        replaceFragment(rutinasCurrentFragment, false);
-
         binding.menuNavegacion.setSelectedItemId(R.id.btnRutinas);
+        replaceFragment(new rutinasFragment(), false);
 
         binding.menuNavegacion.setOnItemSelectedListener(item -> {
             int itemId = item.getItemId();
@@ -35,9 +30,7 @@ public class MainActivity extends AppCompatActivity {
             } else if (itemId == R.id.btnRegistros) {
                 replaceFragment(new registrosFragment(), false);
             } else if (itemId == R.id.btnRutinas) {
-                if (currentFragment != rutinasCurrentFragment) {
-                    replaceFragment(rutinasCurrentFragment, false);
-                }
+                    replaceFragment(new rutinasFragment(), false);
             }
             return true;
         });
@@ -52,7 +45,6 @@ public class MainActivity extends AppCompatActivity {
             fragmentTransaction.addToBackStack(null);
         }
         fragmentTransaction.commit();
-        currentFragment = fragment;
     }
 
     public void setToolbarText(String text) {
@@ -60,10 +52,5 @@ public class MainActivity extends AppCompatActivity {
         if (textView != null) {
             textView.setText(text);
         }
-    }
-
-    public void replaceRutinasFragment(Fragment fragment, boolean addToBackStack) {
-        rutinasCurrentFragment = fragment;
-        replaceFragment(fragment, addToBackStack);
     }
 }

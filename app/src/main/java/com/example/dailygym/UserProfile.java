@@ -52,7 +52,7 @@ public class UserProfile {
         this.altura = altura;
     }
 
-    public void setObjetivo(String objetivos) {
+    public void setObjetivo(String objetivo) {
         this.objetivo = objetivo;
     }
 }

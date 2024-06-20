@@ -74,7 +74,7 @@ public class DetallesDiaEntrenoFragment extends Fragment {
         Button btnEliminarEjercicios = view.findViewById(R.id.btnEliminarEjercicios);
         btnAgregarEjercicios.setOnClickListener(v -> {
             Fragment agregarEjerciciosFragment = AgregarEjerciciosFragment.newInstance(idRutina, idDiaEntreno);
-            ((MainActivity) requireActivity()).replaceRutinasFragment(agregarEjerciciosFragment, true);
+            ((MainActivity) requireActivity()).replaceFragment(agregarEjerciciosFragment, true);
         });
 
         btnEliminarEjercicios.setOnClickListener(v -> mostrarDialogoEliminarEjercicios(idRutina, idDiaEntreno));

@@ -57,7 +57,7 @@ public class EjerciciosAdapter extends RecyclerView.Adapter<EjerciciosAdapter.Ej
 
                     Fragment detallesEjercicioFragment = DetallesEjercicioFragment.newInstance(ejercicio, idRutina, idDiaEntreno);
 
-                    ((MainActivity) context).replaceRutinasFragment(detallesEjercicioFragment, true);
+                    ((MainActivity) context).replaceFragment(detallesEjercicioFragment, true);
                 }
             });
         }

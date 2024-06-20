@@ -48,7 +48,7 @@ public class rutinasFragment extends Fragment {
         });
 
         TextView textViewTusRutinas = rootView.findViewById(R.id.textViewTusRutinas);
-        textViewTusRutinas.setOnClickListener(v -> ((MainActivity) requireActivity()).replaceRutinasFragment(new TusRutinasFragment(), true));
+        textViewTusRutinas.setOnClickListener(v -> ((MainActivity) requireActivity()).replaceFragment(new TusRutinasFragment(), true));
 
         actualizarRutinaPrincipalUI(rootView);
         return rootView;
@@ -66,7 +66,6 @@ public class rutinasFragment extends Fragment {
         }
     }
 
-    //nuevo
     private void actualizarRutinaPrincipalUI(View view) {
         Rutinas rutinaPrincipal = getRutinaPrincipal();
         CardView cardViewRutinaPrincipal = view.findViewById(R.id.cardViewRutinaPrincipal);

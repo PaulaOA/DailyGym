@@ -65,7 +65,7 @@ public class DetallesRutinaFragment extends Fragment {
 
                 cardViewDia.setOnClickListener(v -> {
                     Fragment fragment = DetallesDiaEntrenoFragment.newInstance(diaEntreno, rutina.getIdRutina(), diaEntreno.getIdDiaEntreno(), diaEntreno.getNombreDia());
-                    ((MainActivity) requireActivity()).replaceRutinasFragment(fragment, true);
+                    ((MainActivity) requireActivity()).replaceFragment(fragment, true);
                 });
                 layoutDiasEntreno.addView(cardViewDia);
             }
